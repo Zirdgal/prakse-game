@@ -1,4 +1,4 @@
-# Rythm game name (still in progress)
+# Untitled Rhythm game
 
 ## Genre
 **Rhythm game**, similar to Dance Dance Revolution and Friday Night Funkin'
