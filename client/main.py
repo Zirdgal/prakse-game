@@ -1,5 +1,5 @@
 import pygame
-
+bsSpawnerTimer = 0
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
@@ -8,21 +8,74 @@ clock = pygame.time.Clock()
 running = True
 delta_time = 0
 NOTE_SIZE = 60
-NOTE_SPEED = 400
-player_score = 0
+NOTE_SPEED = 475
+INPUT_COOLDOWN = 20
 
+lane1_input_cooldown = INPUT_COOLDOWN
+lane2_input_cooldown = INPUT_COOLDOWN
+lane3_input_cooldown = INPUT_COOLDOWN
+lane4_input_cooldown = INPUT_COOLDOWN
+lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
+lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
+lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
+lane4_input = pygame.Vector2(546, screen.get_height() / 1.2)
+
+player_score = 0
 font = pygame.font.Font(None, 32)
 text = font.render("Score: " + str(player_score), True, "white")
 
-note1 = pygame.Vector2(90, 0)
-note2 = pygame.Vector2(242, 0)
-note3 = pygame.Vector2(394, 0)
-note4 = pygame.Vector2(546, 0)
+# note1 = pygame.Vector2(90, 0)
+# note2 = pygame.Vector2(242, 0)
+# note3 = pygame.Vector2(394, 0)
+# note4 = pygame.Vector2(546, 0)
 
-input1 = pygame.Vector2(90, screen.get_height() / 1.2)
-input2 = pygame.Vector2(242, screen.get_height() / 1.2)
-input3 = pygame.Vector2(394, screen.get_height() / 1.2)
-input4 = pygame.Vector2(546, screen.get_height() / 1.2)
+note_list = []
+lane1_list = []
+lane2_list = []
+lane3_list = []
+lane4_list = []
+
+# class Notes:
+#     def __init__ (self):
+#         self.size = NOTE_SIZE
+    
+#     def create_note (self):
+#         Note = pygame.Vector2(90, 0)
+#         note_list.append(Note)
+#         pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
+
+
+#     def draw (self):
+#         for note in note_list:
+#             pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
+
+class Note: 
+    def __init__ (self, colour, x, y, lane):
+        self.size = NOTE_SIZE
+        self.colour = colour
+        self.x = x
+        self.y = y
+        self.lane = lane
+    
+    def create_note (self):
+        Note = pygame.Vector2(self.x, self.y)
+        note_list.append(Note)
+        if (self.lane == 1 ):
+            lane1_list.append(Note)
+        elif (self.lane == 2):
+            lane2_list.append(Note)
+        elif (self.lane == 3):
+            lane3_list.append(Note)
+        elif (self.lane == 4):
+            lane4_list.append(Note)
+        pygame.draw.circle(screen, self.colour, Note, self.size)
+
+# inherits from Note class
+class Lane1_Note(Note):
+    def __init__ (self):
+        super().__init__("brown2", 90, 0, 1)
+    
+Lane1_Note = Lane1_Note()
 
 while running:
     for event in pygame.event.get():
@@ -31,51 +84,122 @@ while running:
     
     screen.fill("mediumorchid4")
 
-    pygame.draw.circle(screen, "brown2", input1, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightgoldenrod", input2, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightgreen", input3, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightpink2", input4, NOTE_SIZE)
+    pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
+    pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
+    pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
+    pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
 
-    pygame.draw.circle(screen, "red", note1, NOTE_SIZE)
-    pygame.draw.circle(screen, "yellow", note2, NOTE_SIZE)
-    pygame.draw.circle(screen, "green", note3, NOTE_SIZE)
-    pygame.draw.circle(screen, "pink", note4, NOTE_SIZE)
+    # if (note1):
+    #     pygame.draw.circle(screen, "red", note1, NOTE_SIZE)
+    # if (note2):
+    #     pygame.draw.circle(screen, "yellow", note2, NOTE_SIZE)
+    # if (note3):
+    #     pygame.draw.circle(screen, "green", note3, NOTE_SIZE)
+    # if (note4):
+    #     pygame.draw.circle(screen, "pink", note4, NOTE_SIZE)
 
     screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
+    # note1.y += NOTE_SPEED * delta_time
+    # note2.y += NOTE_SPEED * delta_time
+    # note3.y += NOTE_SPEED * delta_time
+    # note4.y += NOTE_SPEED * delta_time
+
+    # if (note1.y > screen.get_height()):
+    #     note1.y = 0
     
+    # if (note2.y > screen.get_height()):
+    #     note2.y = 0
 
+    # if (note3.y > screen.get_height()):
+    #     note3.y = 0
 
-    note1.y += NOTE_SPEED * delta_time
-    note2.y += NOTE_SPEED * delta_time
-    note3.y += NOTE_SPEED * delta_time
-    note4.y += NOTE_SPEED * delta_time
-
-    if (note1.y > screen.get_height()):
-        note1.y = 0
-    
-    if (note2.y > screen.get_height()):
-        note2.y = 0
-
-    if (note3.y > screen.get_height()):
-        note3.y = 0
-
-    if (note4.y > screen.get_height()):
-        note4.y = 0
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-        player_score += 1
-    if keys[pygame.K_s]:
-        player_score += 1
-    if keys[pygame.K_a]:
-        player_score += 1
-    if keys[pygame.K_d]:
-        player_score += 1
+    # if (note4.y > screen.get_height()):
+    #     note4.y = 0
 
     
 
+    keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
+    # 1st note
+    if keys[pygame.K_a] == True and lane1_input_cooldown == 0: 
+        if (note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
+            player_score += 1
+            del note1
+        else:
+            player_score -= 1
+        lane1_input_cooldown = INPUT_COOLDOWN
+
+    # 2nd note
+    # if keys[pygame.K_w] == True and lane2_input_cooldown == 0: 
+    #     if (note2.y < lane2_input.y + 100 and note2.y > lane2_input.y - 100):
+    #         player_score += 1
+    #         del note2
+    #     else:
+    #         player_score -= 1
+    #     lane2_input_cooldown = INPUT_COOLDOWN
+
+    # # 3rd note
+    # if keys[pygame.K_s] == True and lane3_input_cooldown == 0: 
+    #     if (note3.y < lane3_input.y + 100 and note3.y > lane3_input.y - 100):
+    #         player_score += 1
+    #         del note3
+    #     else:
+    #         player_score -= 1
+    #     lane3_input_cooldown = INPUT_COOLDOWN
+    
+    # # 4th note
+    # if keys[pygame.K_d] == True and lane4_input_cooldown == 0: 
+    #     if (note4.y < lane4_input.y + 100 and note4.y > lane4_input.y - 100):
+    #         player_score += 1
+    #         del note4
+    #     else:
+    #         player_score -= 1
+    #     lane4_input_cooldown = INPUT_COOLDOWN
+
+
+    if (lane1_input_cooldown > 0):
+        lane1_input_cooldown -= 1
+    
+    # if (lane2_input_cooldown > 0):
+    #     lane2_input_cooldown -= 1
+
+    # if (lane3_input_cooldown > 0):
+    #     lane3_input_cooldown -= 1
+
+    # if (lane4_input_cooldown > 0):
+    #     lane4_input_cooldown -= 1
+
+    if bsSpawnerTimer > 60:
+        Lane1_Note.create_note()
+        bsSpawnerTimer = 0
+    
+    bsSpawnerTimer += 1
+    print(bsSpawnerTimer)
+    
+    for note in note_list:
+        pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
+        note.y += NOTE_SPEED * delta_time
+
+        if (note.y > screen.get_height()):
+            player_score -= 1
+            note_list.remove(note)
+            
+            print(note)
+
+            # if (note.lane == 1 ):
+            #     lane1_list.remove(note)
+            # elif (note.lane == 2):
+            #     lane2_list.remove(note)
+            # elif (note.lane == 3):
+            #     lane3_list.remove(note)
+            # elif (note.lane == 4):
+            #     lane4_list.remove(note)
+
+            del note
+    
+    text = font.render("Score: " + str(player_score), True, "white")
     pygame.display.flip()
+    
     delta_time = clock.tick(60) / 1000 # 60 tps
 
 pygame.quit()
