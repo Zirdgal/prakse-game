@@ -53,14 +53,15 @@ class Note:
     def __init__ (self, colour, x, y, lane):
         self.size = NOTE_SIZE
         self.colour = colour
-        self.pos = pygame.Vector2(x, y)
+        self.x = x
+        self.y = y
         self.lane = lane
 
     def update (self):
-        self.pos.y += NOTE_SPEED * delta_time
+        self.y += NOTE_SPEED * delta_time
 
     def draw (self):
-        pygame.draw.circle(screen, self.colour, self.pos, self.size)
+        pygame.draw.circle(screen, self.colour, (self.x, self.y), self.size)
     
     def create_note (self):
         Note = pygame.Vector2(self.x, self.y)
@@ -116,15 +117,15 @@ while running:
 
     keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
     # 1st note
-    if keys[pygame.K_a] == True and lane1_input_cooldown == 0: 
-        note1 : Lane1_Note
-        noteY = 0
+    if keys[pygame.K_a] == True and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
+        note1 = None
+        highestY = -1
         for note in lane1_list:
-            if (note.y > noteY):
+            if (note.y > highestY):
+                highestY = note.y
                 note1 = note
-                note.y = noteY
 
-        if (len(lane1_list) > 0 and note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
+        if (note1 and note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
             player_score += 1
             
             lane1_list.remove(note1)
@@ -194,7 +195,7 @@ while running:
         note.update()
         note.draw()
 
-        if (note.pos.y > screen.get_height()):
+        if (note.y > screen.get_height()):
             player_score -= 1
             note_list.remove(note)
             if (note.lane == 1 ):
