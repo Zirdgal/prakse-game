@@ -53,21 +53,18 @@ class Note:
     def __init__ (self, colour, x, y, lane):
         self.size = NOTE_SIZE
         self.colour = colour
-        self.x = x
-        self.y = y
+        self.pos = pygame.Vector2(x, y)
         self.lane = lane
+
+    def update (self):
+        self.pos.y += NOTE_SPEED * delta_time
+
+    def draw (self):
+        pygame.draw.circle(screen, self.colour, self.pos, self.size)
     
     def create_note (self):
         Note = pygame.Vector2(self.x, self.y)
-        note_list.append(Note)
-        if (self.lane == 1 ):
-            lane1_list.append(Note)
-        elif (self.lane == 2):
-            lane2_list.append(Note)
-        elif (self.lane == 3):
-            lane3_list.append(Note)
-        elif (self.lane == 4):
-            lane4_list.append(Note)
+        
         pygame.draw.circle(screen, self.colour, Note, self.size)
 
 # inherits from Note class
@@ -75,8 +72,6 @@ class Lane1_Note(Note):
     def __init__ (self):
         super().__init__("brown2", 90, 0, 1)
     
-Lane1_Note = Lane1_Note()
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -170,32 +165,37 @@ while running:
     #     lane4_input_cooldown -= 1
 
     if bsSpawnerTimer > 60:
-        Lane1_Note.create_note()
+        new_note = Lane1_Note()
+        note_list.append(new_note)
+        if (new_note.lane == 1 ):
+            lane1_list.append(new_note)
+        elif (new_note.lane == 2):
+            lane2_list.append(new_note)
+        elif (new_note.lane == 3):
+            lane3_list.append(new_note)
+        elif (new_note.lane == 4):
+            lane4_list.append(new_note)
         bsSpawnerTimer = 0
     
     bsSpawnerTimer += 1
     print(bsSpawnerTimer)
-    
-    for note in note_list:
-        pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
-        note.y += NOTE_SPEED * delta_time
+     
+     # the [:] signifies that its a copy of the original list because this snippet of code will delete objects from the actual list - slice notation start:stop:step
+    for note in note_list[:]:
+        note.update()
+        note.draw()
 
-        if (note.y > screen.get_height()):
+        if (note.pos.y > screen.get_height()):
             player_score -= 1
             note_list.remove(note)
-            
-            print(note)
-
-            # if (note.lane == 1 ):
-            #     lane1_list.remove(note)
-            # elif (note.lane == 2):
-            #     lane2_list.remove(note)
-            # elif (note.lane == 3):
-            #     lane3_list.remove(note)
-            # elif (note.lane == 4):
-            #     lane4_list.remove(note)
-
-            del note
+            if (note.lane == 1 ):
+                lane1_list.remove(note)
+            elif (note.lane == 2):
+                lane2_list.remove(note)
+            elif (note.lane == 3):
+                lane3_list.remove(note)
+            elif (note.lane == 4):
+                lane4_list.remove(note)
     
     text = font.render("Score: " + str(player_score), True, "white")
     pygame.display.flip()
