@@ -232,6 +232,9 @@ while running:
         elif (new_note.lane == 4):
             lane4_list.append(new_note)
     
+
+    if bsSpawnerTimer > 1000:
+        bsSpawnerTimer = 1
     bsSpawnerTimer += 1
     print(bsSpawnerTimer)
      
