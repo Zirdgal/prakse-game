@@ -15,8 +15,8 @@ There are four arrows, controlled by the arrow keys or WASD, possibly even more 
 Notes which are also in arrow shape but colourful will either raise or fall onto the arrows and the player must tap the corresponding arrow when the note overlaps it.
 
 ### Added on:
-**Super meter** - after tapping enough notes correctly and building up a combo the user can press another key (space) to activate a "super" mode that will give 2x score for a few seconds.
-**Combo multiplier** - after tapping enough notes for keeping up a combo and not missing any notes give a global multiplier.
+1. **Super meter** - after tapping enough notes correctly and building up a combo the user can press another key (space) to activate a "super" mode that will give 2x score for a few seconds.
+2. **Combo multiplier** - after tapping enough notes for keeping up a combo and not missing any notes give a global multiplier.
 
 ## Difficulty:
 Each level will have the same exact pattern of notes. Levels themselves will not get harder. The only difficulty increase will be from additional levels being added that are harder than other levels.
