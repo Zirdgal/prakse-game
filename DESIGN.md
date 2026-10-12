@@ -22,7 +22,7 @@ Notes which are also in arrow shape but colourful will either raise or fall onto
 Each level will have the same exact pattern of notes. Levels themselves will not get harder. The only difficulty increase will be from additional levels being added that are harder than other levels.
 
 ## Saving:
-Game saves player scores on each level.
+Game saves player scores and their usernames for each level.
 
 
 
