@@ -1,5 +1,5 @@
 import pygame
-bsSpawnerTimer = 0
+bsSpawnerTimer = 1
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
@@ -35,20 +35,6 @@ lane2_list = []
 lane3_list = []
 lane4_list = []
 
-# class Notes:
-#     def __init__ (self):
-#         self.size = NOTE_SIZE
-    
-#     def create_note (self):
-#         Note = pygame.Vector2(90, 0)
-#         note_list.append(Note)
-#         pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
-
-
-#     def draw (self):
-#         for note in note_list:
-#             pygame.draw.circle(screen, "brown2", note, NOTE_SIZE)
-
 class Note: 
     def __init__ (self, colour, x, y, lane):
         self.size = NOTE_SIZE
@@ -71,7 +57,19 @@ class Note:
 # inherits from Note class
 class Lane1_Note(Note):
     def __init__ (self):
-        super().__init__("brown2", 90, 0, 1)
+        super().__init__("red", 90, 0, 1)
+
+class Lane2_Note(Note):
+    def __init__ (self):
+        super().__init__("yellow", 242, 0, 2)
+    
+class Lane3_Note(Note):
+    def __init__ (self):
+        super().__init__("green", 394, 0, 3)
+
+class Lane4_Note(Note):
+    def __init__ (self):
+        super().__init__("pink", 546, 0, 4)
     
 while running:
     for event in pygame.event.get():
@@ -85,96 +83,96 @@ while running:
     pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
     pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
 
-    # if (note1):
-    #     pygame.draw.circle(screen, "red", note1, NOTE_SIZE)
-    # if (note2):
-    #     pygame.draw.circle(screen, "yellow", note2, NOTE_SIZE)
-    # if (note3):
-    #     pygame.draw.circle(screen, "green", note3, NOTE_SIZE)
-    # if (note4):
-    #     pygame.draw.circle(screen, "pink", note4, NOTE_SIZE)
 
     screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
-
-    # note1.y += NOTE_SPEED * delta_time
-    # note2.y += NOTE_SPEED * delta_time
-    # note3.y += NOTE_SPEED * delta_time
-    # note4.y += NOTE_SPEED * delta_time
-
-    # if (note1.y > screen.get_height()):
-    #     note1.y = 0
-    
-    # if (note2.y > screen.get_height()):
-    #     note2.y = 0
-
-    # if (note3.y > screen.get_height()):
-    #     note3.y = 0
-
-    # if (note4.y > screen.get_height()):
-    #     note4.y = 0
-
-    
 
     keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
     # 1st note
     if keys[pygame.K_a] == True and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
-        note1 = None
+        lane_note = None
         highestY = -1
         for note in lane1_list:
             if (note.y > highestY):
                 highestY = note.y
-                note1 = note
+                lane_note = note
 
-        if (note1 and note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
+        if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
             player_score += 1
             
-            lane1_list.remove(note1)
-            note_list.remove(note1)
+            lane1_list.remove(lane_note)
+            note_list.remove(lane_note)
         else:
             player_score -= 1
         lane1_input_cooldown = INPUT_COOLDOWN
 
-    # 2nd note
-    # if keys[pygame.K_w] == True and lane2_input_cooldown == 0: 
-    #     if (note2.y < lane2_input.y + 100 and note2.y > lane2_input.y - 100):
-    #         player_score += 1
-    #         del note2
-    #     else:
-    #         player_score -= 1
-    #     lane2_input_cooldown = INPUT_COOLDOWN
+   # 2nd note
+    if keys[pygame.K_w] == True and lane2_input_cooldown == 0: 
+        lane_note = None
+        highestY = -1
+        for note in lane2_list:
+            if (note.y > highestY):
+                highestY = note.y
+                lane_note = note
 
-    # # 3rd note
-    # if keys[pygame.K_s] == True and lane3_input_cooldown == 0: 
-    #     if (note3.y < lane3_input.y + 100 and note3.y > lane3_input.y - 100):
-    #         player_score += 1
-    #         del note3
-    #     else:
-    #         player_score -= 1
-    #     lane3_input_cooldown = INPUT_COOLDOWN
+        if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
+            player_score += 1
+            
+            lane2_list.remove(lane_note)
+            note_list.remove(lane_note)
+        else:
+            player_score -= 1
+        lane2_input_cooldown = INPUT_COOLDOWN
+
+    # 3rd note
+    if keys[pygame.K_s] == True and lane3_input_cooldown == 0: 
+        lane_note = None
+        highestY = -1
+        for note in lane3_list:
+            if (note.y > highestY):
+                highestY = note.y
+                lane_note = note
+
+        if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
+            player_score += 1
+            
+            lane3_list.remove(lane_note)
+            note_list.remove(lane_note)
+        else:
+            player_score -= 1
+        lane3_input_cooldown = INPUT_COOLDOWN
     
-    # # 4th note
-    # if keys[pygame.K_d] == True and lane4_input_cooldown == 0: 
-    #     if (note4.y < lane4_input.y + 100 and note4.y > lane4_input.y - 100):
-    #         player_score += 1
-    #         del note4
-    #     else:
-    #         player_score -= 1
-    #     lane4_input_cooldown = INPUT_COOLDOWN
+    # 4th note
+    if keys[pygame.K_d] == True and lane4_input_cooldown == 0: 
+        lane_note = None
+        highestY = -1
+        for note in lane4_list:
+            if (note.y > highestY):
+                highestY = note.y
+                lane_note = note
+
+        if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
+            player_score += 1
+            
+            lane4_list.remove(lane_note)
+            note_list.remove(lane_note)
+        else:
+            player_score -= 1
+        lane4_input_cooldown = INPUT_COOLDOWN
 
 
     if (lane1_input_cooldown > 0):
         lane1_input_cooldown -= 1
     
-    # if (lane2_input_cooldown > 0):
-    #     lane2_input_cooldown -= 1
+    if (lane2_input_cooldown > 0):
+        lane2_input_cooldown -= 1
 
-    # if (lane3_input_cooldown > 0):
-    #     lane3_input_cooldown -= 1
+    if (lane3_input_cooldown > 0):
+        lane3_input_cooldown -= 1
 
-    # if (lane4_input_cooldown > 0):
-    #     lane4_input_cooldown -= 1
+    if (lane4_input_cooldown > 0):
+        lane4_input_cooldown -= 1
 
-    if bsSpawnerTimer > 60:
+    if bsSpawnerTimer % 60 == 0:
         new_note = Lane1_Note()
         note_list.append(new_note)
         if (new_note.lane == 1 ):
@@ -185,7 +183,44 @@ while running:
             lane3_list.append(new_note)
         elif (new_note.lane == 4):
             lane4_list.append(new_note)
-        bsSpawnerTimer = 0
+    
+    if bsSpawnerTimer % 80 == 0:
+        new_note = Lane2_Note()
+        note_list.append(new_note)
+        if (new_note.lane == 1 ):
+            lane1_list.append(new_note)
+        elif (new_note.lane == 2):
+            lane2_list.append(new_note)
+        elif (new_note.lane == 3):
+            lane3_list.append(new_note)
+        elif (new_note.lane == 4):
+            lane4_list.append(new_note)
+    
+        
+    if bsSpawnerTimer % 100 == 0:
+        new_note = Lane3_Note()
+        note_list.append(new_note)
+        if (new_note.lane == 1 ):
+            lane1_list.append(new_note)
+        elif (new_note.lane == 2):
+            lane2_list.append(new_note)
+        elif (new_note.lane == 3):
+            lane3_list.append(new_note)
+        elif (new_note.lane == 4):
+            lane4_list.append(new_note)
+    
+        
+    if bsSpawnerTimer % 120 == 0:
+        new_note = Lane4_Note()
+        note_list.append(new_note)
+        if (new_note.lane == 1 ):
+            lane1_list.append(new_note)
+        elif (new_note.lane == 2):
+            lane2_list.append(new_note)
+        elif (new_note.lane == 3):
+            lane3_list.append(new_note)
+        elif (new_note.lane == 4):
+            lane4_list.append(new_note)
     
     bsSpawnerTimer += 1
     print(bsSpawnerTimer)
