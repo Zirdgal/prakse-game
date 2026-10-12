@@ -117,9 +117,18 @@ while running:
     keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
     # 1st note
     if keys[pygame.K_a] == True and lane1_input_cooldown == 0: 
-        if (note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
+        note1 : Lane1_Note
+        noteY = 0
+        for note in lane1_list:
+            if (note.y > noteY):
+                note1 = note
+                note.y = noteY
+
+        if (len(lane1_list) > 0 and note1.y < lane1_input.y + 100 and note1.y > lane1_input.y - 100):
             player_score += 1
-            del note1
+            
+            lane1_list.remove(note1)
+            note_list.remove(note1)
         else:
             player_score -= 1
         lane1_input_cooldown = INPUT_COOLDOWN
