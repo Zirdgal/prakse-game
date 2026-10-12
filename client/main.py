@@ -11,6 +11,10 @@ NOTE_SIZE = 60
 NOTE_SPEED = 475
 INPUT_COOLDOWN = 20
 
+player_score = 0
+font = pygame.font.Font(None, 32)
+text = font.render("Score: " + str(player_score), True, "white")
+
 lane1_input_cooldown = INPUT_COOLDOWN
 lane2_input_cooldown = INPUT_COOLDOWN
 lane3_input_cooldown = INPUT_COOLDOWN
@@ -19,10 +23,12 @@ lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
 lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
 lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
 lane4_input = pygame.Vector2(546, screen.get_height() / 1.2)
+lane1_input_text = font.render("A", True, "white")
+lane2_input_text = font.render("W", True, "white")
+lane3_input_text = font.render("S", True, "white")
+lane4_input_text = font.render("D", True, "white")
 
-player_score = 0
-font = pygame.font.Font(None, 32)
-text = font.render("Score: " + str(player_score), True, "white")
+
 
 # note1 = pygame.Vector2(90, 0)
 # note2 = pygame.Vector2(242, 0)
@@ -83,6 +89,10 @@ while running:
     pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
     pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
 
+    screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
+    screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
+    screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
+    screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
     screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
