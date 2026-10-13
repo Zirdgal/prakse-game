@@ -20,11 +20,19 @@ SUPER_METER_INCREASE = 15
 SUPER_METER_MULT = 1
 superMeterActive = False
 
+comboMeter = 0
+COMBO_METER_INCREASE = 0.1
+COMBO_METER_MULT = 1
+comboMeterActive = False
+
 SONG_ID_SELECTED = 1
 
 player_score = 0
+
+BASE_SCORE_INCREASE = 1
+
 font = pygame.font.Font(None, 32)
-text = font.render("Score: " + str(player_score), True, "white")
+text = font.render("Score: " + str(round(player_score, 3)), True, "white")
 
 lane1_input_cooldown = INPUT_COOLDOWN
 lane2_input_cooldown = INPUT_COOLDOWN
@@ -127,13 +135,21 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
-                    player_score += 1 * SUPER_METER_MULT
+
+                    player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
+
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
+
+                    COMBO_METER_MULT += COMBO_METER_INCREASE
+                    comboMeter += 1
+                    
                     lane1_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
                     player_score -= 1
+                    COMBO_METER_MULT = 1
+                    comboMeter = 0
                 lane1_input_cooldown = INPUT_COOLDOWN
 
         # 2nd note
@@ -146,13 +162,21 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
-                    player_score += 1 * SUPER_METER_MULT
+
+                    player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
+
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
+
+                    COMBO_METER_MULT += COMBO_METER_INCREASE
+                    comboMeter += 1
+
                     lane2_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
                     player_score -= 1
+                    COMBO_METER_MULT = 1
+                    comboMeter = 0
                 lane2_input_cooldown = INPUT_COOLDOWN
 
             # 3rd note
@@ -165,13 +189,21 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
-                    player_score += 1 * SUPER_METER_MULT
+
+                    player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
+
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
+                    
+                    COMBO_METER_MULT += COMBO_METER_INCREASE
+                    comboMeter += 1
+
                     lane3_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
                     player_score -= 1
+                    COMBO_METER_MULT = 1
+                    comboMeter = 0
                 lane3_input_cooldown = INPUT_COOLDOWN
             
             # 4th note
@@ -184,13 +216,21 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
-                    player_score += 1 * SUPER_METER_MULT
+
+                    player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
+
                     if (superMeter < 100):
                         superMeter += SUPER_METER_INCREASE
+
+                    COMBO_METER_MULT += COMBO_METER_INCREASE
+                    comboMeter += 1
+                    
                     lane4_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
                     player_score -= 1
+                    COMBO_METER_MULT = 1
+                    comboMeter = 0
                 lane4_input_cooldown = INPUT_COOLDOWN
             
             # Super Meter (SPACE)
@@ -200,7 +240,7 @@ while running:
 
 
     if songOver:
-        endingText = font.render("You finished with a score of: " + str(player_score), True, "white")
+        endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
         screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
         button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, 200, 50)
         pygame.draw.rect(screen, "green", button_rect)
@@ -223,8 +263,11 @@ while running:
         screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
+
         superText = font.render("Super Meter: " + str(superMeter), True, "white")
-        screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.05))
+        screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.07))
+        comboText = font.render("Combo Meter: " + str(comboMeter), True, "white")
+        screen.blit(comboText, (screen.get_width()/2.35, screen.get_height() /1.04))
 
 
     if (lane1_input_cooldown > 0):
@@ -249,7 +292,6 @@ while running:
             else:
                 songOver = True
         else:
-            #print(songContent[songLineCounter])
             j = 0
             for i in songContent[songLineCounter]:
 
@@ -295,7 +337,7 @@ while running:
             elif (note.lane == 4):
                 lane4_list.remove(note)
     
-    text = font.render("Score: " + str(player_score), True, "white")
+    text = font.render("Score: " + str(round(player_score, 3)), True, "white")
     pygame.display.flip()
     
     if (superMeter >= 100 and superMeterActive == False):
@@ -305,7 +347,6 @@ while running:
     if (superMeter == 0 ):
         SUPER_METER_MULT = 1
         superMeterActive = False
-    
 
     delta_time = clock.tick(60) / 1000 # 60 tps
 
