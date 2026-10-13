@@ -1,6 +1,8 @@
 import pygame
 import os
 import sys
+import subprocess
+import json
 
 # bsSpawnerTimer = 1
 # pygame setup
@@ -25,7 +27,29 @@ COMBO_METER_INCREASE = 0.1
 COMBO_METER_MULT = 1
 comboMeterActive = False
 
-SONG_ID_SELECTED = 1
+
+# files 
+path = os.path.realpath(__file__)
+direc = os.path.dirname(path)
+
+root = os.getcwd()
+
+f = open(root + "/game/data.json")
+data = json.load(f)
+print(data)
+SONG_ID_SELECTED = data["selectedTrack"]
+print(SONG_ID_SELECTED)
+print(data["selectedTrack"])
+f.close()
+song = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
+songContent = song.readlines()
+songData = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
+songDataContent = songData.readlines()
+songSpeed = int(songDataContent[1]) # second line
+songSpeedCounter = 1
+songLineCounter = 1
+songMaxLines = len(songContent)
+
 
 player_score = 0
 
@@ -52,23 +76,6 @@ lane1_input_text = font.render("A", True, "white")
 lane2_input_text = font.render("W", True, "white")
 lane3_input_text = font.render("S", True, "white")
 lane4_input_text = font.render("D", True, "white")
-
-
-# files 
-path = os.path.realpath(__file__)
-direc = os.path.dirname(path)
-song = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
-songContent = song.readlines()
-songData = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
-songDataContent = songData.readlines()
-songSpeed = int(songDataContent[1]) # second line
-songSpeedCounter = 1
-songLineCounter = 1
-songMaxLines = len(songContent)
-
-print(songContent)
-print("2nd line")
-print(songContent[1])
 
 note_list = []
 lane1_list = []
@@ -123,7 +130,11 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and songOver:
                 if button_rect.collidepoint(event.pos):
                    os.execv(sys.executable, ["python"] + sys.argv)
-
+                if button2_rect.collidepoint(event.pos):
+                    pygame.quit()
+                    venv_python = os.path.join (".venv", "bin", "python")
+                    subprocess.run([venv_python, "client/main.py"])
+                    sys.exit()
             # 1st note
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
@@ -242,11 +253,16 @@ while running:
     if songOver:
         endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
         screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
+
         button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, 200, 50)
         pygame.draw.rect(screen, "green", button_rect)
-
         button_text = font.render("Play Again", True, "white")
         screen.blit(button_text, (button_rect.x, button_rect.y))
+
+        button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 150, 200, 50)
+        pygame.draw.rect(screen, "green", button2_rect)
+        button2_text = font.render("MainMenu", True, "white")
+        screen.blit(button2_text, (button2_rect.x, button2_rect.y))
         
     else:
     
