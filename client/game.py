@@ -1,5 +1,6 @@
 import pygame
 import os
+import sys
 
 # bsSpawnerTimer = 1
 # pygame setup
@@ -99,11 +100,18 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.MOUSEBUTTONDOWN and songOver:
+                if button_rect.collidepoint(event.pos):
+                   os.execv(sys.executable, ["python"] + sys.argv)
 
     if songOver:
         endingText = font.render("You finished with a score of: " + str(player_score), True, "white")
         screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
-        pass
+        button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, 200, 50)
+        pygame.draw.rect(screen, "green", button_rect)
+
+        button_text = font.render("Play Again", True, "white")
+        screen.blit(button_text, (button_rect.x, button_rect.y))
         
     else:
     
