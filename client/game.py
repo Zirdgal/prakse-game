@@ -1,11 +1,14 @@
 import pygame
-bsSpawnerTimer = 1
+import os
+
+# bsSpawnerTimer = 1
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
 pygame.display.set_caption("Untitled Rhythm Game")
 clock = pygame.time.Clock()
 running = True
+songOver = False
 delta_time = 0
 NOTE_SIZE = 60
 NOTE_SPEED = 475
@@ -29,6 +32,21 @@ lane3_input_text = font.render("S", True, "white")
 lane4_input_text = font.render("D", True, "white")
 
 
+# files 
+path = os.path.realpath(__file__)
+direc = os.path.dirname(path)
+song = open(direc + "/charts/song1.txt", "r")
+content = song.readlines()
+
+print(content)
+print("2nd line")
+print(content[1])
+
+
+songSpeed = 10
+songSpeedCounter = 1
+songLineCounter = 1
+songMaxLines = len(content)
 
 # note1 = pygame.Vector2(90, 0)
 # note2 = pygame.Vector2(242, 0)
@@ -81,20 +99,27 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    if songOver:
+        endingText = font.render("You finished with a score of: " + str(player_score), True, "white")
+        screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
+        pass
+        
+    else:
     
-    screen.fill("mediumorchid4")
+        screen.fill("mediumorchid4")
 
-    pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
-    pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
+        pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
+        pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
+        pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
+        pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
 
-    screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
-    screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
-    screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
-    screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
+        screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
+        screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
+        screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
+        screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
-    screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
+        screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
     keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
     # 1st note
@@ -182,61 +207,103 @@ while running:
     if (lane4_input_cooldown > 0):
         lane4_input_cooldown -= 1
 
-    if bsSpawnerTimer % 60 == 0:
-        new_note = Lane1_Note()
-        note_list.append(new_note)
-        if (new_note.lane == 1 ):
-            lane1_list.append(new_note)
-        elif (new_note.lane == 2):
-            lane2_list.append(new_note)
-        elif (new_note.lane == 3):
-            lane3_list.append(new_note)
-        elif (new_note.lane == 4):
-            lane4_list.append(new_note)
+    ###NOTE SPAWNING
+
+    if songSpeedCounter > songSpeed:
+
+        if (songLineCounter >= songMaxLines):
+            if (len(note_list) > 0):
+                pass
+            else:
+                songOver = True
+        else:
+            #print(content[songLineCounter])
+            j = 0
+            for i in content[songLineCounter]:
+
+                if (i == "0"):
+                    if (j == 0):
+                        new_note = Lane1_Note()
+                        note_list.append(new_note)
+                        lane1_list.append(new_note)
+                    elif (j == 1):
+                        new_note = Lane2_Note()
+                        note_list.append(new_note)
+                        lane2_list.append(new_note)
+                    elif (j == 2):
+                        new_note = Lane3_Note()
+                        note_list.append(new_note)
+                        lane3_list.append(new_note)
+                    elif (j == 3):
+                        new_note = Lane4_Note()
+                        note_list.append(new_note)
+                        lane4_list.append(new_note)
+                j += 1
+
+
+            songLineCounter += 1
+            songSpeedCounter = 0
+
+
+    songSpeedCounter += 1
+
+    # if bsSpawnerTimer % 60 == 0:
+    #     new_note = Lane1_Note()
+    #     note_list.append(new_note)
+    #     if (new_note.lane == 1 ):
+    #         lane1_list.append(new_note)
+    #     elif (new_note.lane == 2):
+    #         lane2_list.append(new_note)
+    #     elif (new_note.lane == 3):
+    #         lane3_list.append(new_note)
+    #     elif (new_note.lane == 4):
+    #         lane4_list.append(new_note)
     
-    if bsSpawnerTimer % 80 == 0:
-        new_note = Lane2_Note()
-        note_list.append(new_note)
-        if (new_note.lane == 1 ):
-            lane1_list.append(new_note)
-        elif (new_note.lane == 2):
-            lane2_list.append(new_note)
-        elif (new_note.lane == 3):
-            lane3_list.append(new_note)
-        elif (new_note.lane == 4):
-            lane4_list.append(new_note)
+    # if bsSpawnerTimer % 80 == 0:
+    #     new_note = Lane2_Note()
+    #     note_list.append(new_note)
+    #     if (new_note.lane == 1 ):
+    #         lane1_list.append(new_note)
+    #     elif (new_note.lane == 2):
+    #         lane2_list.append(new_note)
+    #     elif (new_note.lane == 3):
+    #         lane3_list.append(new_note)
+    #     elif (new_note.lane == 4):
+    #         lane4_list.append(new_note)
     
         
-    if bsSpawnerTimer % 100 == 0:
-        new_note = Lane3_Note()
-        note_list.append(new_note)
-        if (new_note.lane == 1 ):
-            lane1_list.append(new_note)
-        elif (new_note.lane == 2):
-            lane2_list.append(new_note)
-        elif (new_note.lane == 3):
-            lane3_list.append(new_note)
-        elif (new_note.lane == 4):
-            lane4_list.append(new_note)
+    # if bsSpawnerTimer % 100 == 0:
+    #     new_note = Lane3_Note()
+    #     note_list.append(new_note)
+    #     if (new_note.lane == 1 ):
+    #         lane1_list.append(new_note)
+    #     elif (new_note.lane == 2):
+    #         lane2_list.append(new_note)
+    #     elif (new_note.lane == 3):
+    #         lane3_list.append(new_note)
+    #     elif (new_note.lane == 4):
+    #         lane4_list.append(new_note)
     
         
-    if bsSpawnerTimer % 120 == 0:
-        new_note = Lane4_Note()
-        note_list.append(new_note)
-        if (new_note.lane == 1 ):
-            lane1_list.append(new_note)
-        elif (new_note.lane == 2):
-            lane2_list.append(new_note)
-        elif (new_note.lane == 3):
-            lane3_list.append(new_note)
-        elif (new_note.lane == 4):
-            lane4_list.append(new_note)
+    # if bsSpawnerTimer % 120 == 0:
+    #     new_note = Lane4_Note()
+    #     note_list.append(new_note)
+    #     if (new_note.lane == 1 ):
+    #         lane1_list.append(new_note)
+    #     elif (new_note.lane == 2):
+    #         lane2_list.append(new_note)
+    #     elif (new_note.lane == 3):
+    #         lane3_list.append(new_note)
+    #     elif (new_note.lane == 4):
+    #         lane4_list.append(new_note)
     
 
-    if bsSpawnerTimer > 1000:
-        bsSpawnerTimer = 1
-    bsSpawnerTimer += 1
-    print(bsSpawnerTimer)
+    # if bsSpawnerTimer > 1000:
+    #     bsSpawnerTimer = 1
+    # bsSpawnerTimer += 1
+
+    
+
      
      # the [:] signifies that its a copy of the original list because this snippet of code will delete objects from the actual list - slice notation start:stop:step
     for note in note_list[:]:
@@ -260,4 +327,5 @@ while running:
     
     delta_time = clock.tick(60) / 1000 # 60 tps
 
+song.close()
 pygame.quit()
