@@ -158,7 +158,7 @@ while running:
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
 
-                    COMBO_METER_MULT += COMBO_METER_INCREASE
+                    
                     comboMeter += 1
 
                     lane1_list.remove(lane_note)
@@ -167,12 +167,15 @@ while running:
                         if (lane_note.y < lane1_input.y + 20 and lane_note.y > lane1_input.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 3
                         else:
                             textInputType = 1
-                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 2
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        COMBO_METER_MULT += COMBO_METER_INCREASE
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -195,7 +198,6 @@ while running:
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
 
-                    COMBO_METER_MULT += COMBO_METER_INCREASE
                     comboMeter += 1
 
                     lane2_list.remove(lane_note)
@@ -204,12 +206,15 @@ while running:
                         if (lane_note.y < lane2_input.y + 20 and lane_note.y > lane2_input.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 3
                         else:
                             textInputType = 1
-                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 2
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        COMBO_METER_MULT += COMBO_METER_INCREASE
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -232,7 +237,6 @@ while running:
                     if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
                     
-                    COMBO_METER_MULT += COMBO_METER_INCREASE
                     comboMeter += 1
 
                     lane3_list.remove(lane_note)
@@ -241,12 +245,15 @@ while running:
                         if (lane_note.y < lane3_input.y + 20 and lane_note.y > lane3_input.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 3
                         else:
                             textInputType = 1
-                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 2
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        COMBO_METER_MULT += COMBO_METER_INCREASE
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -269,7 +276,6 @@ while running:
                     if (superMeter < 100):
                         superMeter += SUPER_METER_INCREASE
 
-                    COMBO_METER_MULT += COMBO_METER_INCREASE
                     comboMeter += 1
                     
                     lane4_list.remove(lane_note)
@@ -278,12 +284,15 @@ while running:
                         if (lane_note.y < lane4_input.y + 20 and lane_note.y > lane4_input.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 3
                         else:
                             textInputType = 1
-                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                            COMBO_METER_MULT += COMBO_METER_INCREASE * 2
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        COMBO_METER_MULT += COMBO_METER_INCREASE
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -397,6 +406,7 @@ while running:
 
         if (note.y > screen.get_height()):
             player_score -= 1
+            comboMeter = 0
             note_list.remove(note)
             if (note.lane == 1 ):
                 lane1_list.remove(note)
