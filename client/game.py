@@ -6,7 +6,7 @@ import sys
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
-pygame.display.set_caption("Untitled Rhythm Game")
+pygame.display.set_caption("Zird Rhythm Game")
 clock = pygame.time.Clock()
 running = True
 songOver = False
@@ -61,14 +61,6 @@ songMaxLines = len(songContent)
 print(songContent)
 print("2nd line")
 print(songContent[1])
-
-
-
-
-# note1 = pygame.Vector2(90, 0)
-# note2 = pygame.Vector2(242, 0)
-# note3 = pygame.Vector2(394, 0)
-# note4 = pygame.Vector2(546, 0)
 
 note_list = []
 lane1_list = []
@@ -284,66 +276,7 @@ while running:
             songLineCounter += 1
             songSpeedCounter = 0
 
-
     songSpeedCounter += 1
-
-    # if bsSpawnerTimer % 60 == 0:
-    #     new_note = Lane1_Note()
-    #     note_list.append(new_note)
-    #     if (new_note.lane == 1 ):
-    #         lane1_list.append(new_note)
-    #     elif (new_note.lane == 2):
-    #         lane2_list.append(new_note)
-    #     elif (new_note.lane == 3):
-    #         lane3_list.append(new_note)
-    #     elif (new_note.lane == 4):
-    #         lane4_list.append(new_note)
-    
-    # if bsSpawnerTimer % 80 == 0:
-    #     new_note = Lane2_Note()
-    #     note_list.append(new_note)
-    #     if (new_note.lane == 1 ):
-    #         lane1_list.append(new_note)
-    #     elif (new_note.lane == 2):
-    #         lane2_list.append(new_note)
-    #     elif (new_note.lane == 3):
-    #         lane3_list.append(new_note)
-    #     elif (new_note.lane == 4):
-    #         lane4_list.append(new_note)
-    
-        
-    # if bsSpawnerTimer % 100 == 0:
-    #     new_note = Lane3_Note()
-    #     note_list.append(new_note)
-    #     if (new_note.lane == 1 ):
-    #         lane1_list.append(new_note)
-    #     elif (new_note.lane == 2):
-    #         lane2_list.append(new_note)
-    #     elif (new_note.lane == 3):
-    #         lane3_list.append(new_note)
-    #     elif (new_note.lane == 4):
-    #         lane4_list.append(new_note)
-    
-        
-    # if bsSpawnerTimer % 120 == 0:
-    #     new_note = Lane4_Note()
-    #     note_list.append(new_note)
-    #     if (new_note.lane == 1 ):
-    #         lane1_list.append(new_note)
-    #     elif (new_note.lane == 2):
-    #         lane2_list.append(new_note)
-    #     elif (new_note.lane == 3):
-    #         lane3_list.append(new_note)
-    #     elif (new_note.lane == 4):
-    #         lane4_list.superText = font.render("Super Meter: " + str(superMeter), True, "white")append(new_note)
-    
-
-    # if bsSpawnerTimer > 1000:
-    #     bsSpawnerTimer = 1
-    # bsSpawnerTimer += 1
-
-    
-
      
      # the [:] signifies that its a copy of the original list because this snippet of code will delete objects from the actual list - slice notation start:stop:step
     for note in note_list[:]:
