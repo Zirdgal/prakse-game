@@ -13,7 +13,11 @@ songOver = False
 delta_time = 0
 NOTE_SIZE = 60
 NOTE_SPEED = 475
-INPUT_COOLDOWN = 20
+INPUT_COOLDOWN = 15
+
+
+
+SONG_ID_SELECTED = 1
 
 player_score = 0
 font = pygame.font.Font(None, 32)
@@ -36,18 +40,21 @@ lane4_input_text = font.render("D", True, "white")
 # files 
 path = os.path.realpath(__file__)
 direc = os.path.dirname(path)
-song = open(direc + "/charts/song1.txt", "r")
-content = song.readlines()
-
-print(content)
-print("2nd line")
-print(content[1])
-
-
-songSpeed = 10
+song = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
+songContent = song.readlines()
+songData = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
+songDataContent = songData.readlines()
+songSpeed = int(songDataContent[1]) # second line
 songSpeedCounter = 1
 songLineCounter = 1
-songMaxLines = len(content)
+songMaxLines = len(songContent)
+
+print(songContent)
+print("2nd line")
+print(songContent[1])
+
+
+
 
 # note1 = pygame.Vector2(90, 0)
 # note2 = pygame.Vector2(242, 0)
@@ -225,9 +232,9 @@ while running:
             else:
                 songOver = True
         else:
-            #print(content[songLineCounter])
+            #print(songContent[songLineCounter])
             j = 0
-            for i in content[songLineCounter]:
+            for i in songContent[songLineCounter]:
 
                 if (i == "0"):
                     if (j == 0):
