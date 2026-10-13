@@ -15,7 +15,10 @@ NOTE_SIZE = 60
 NOTE_SPEED = 475
 INPUT_COOLDOWN = 15
 
-
+superMeter = 0
+SUPER_METER_INCREASE = 15
+SUPER_METER_MULT = 1
+superMeterActive = False
 
 SONG_ID_SELECTED = 1
 
@@ -132,8 +135,9 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
-                    player_score += 1
-                    
+                    player_score += 1 * SUPER_METER_MULT
+                    if (superMeter < 100 and superMeterActive == False):
+                        superMeter += SUPER_METER_INCREASE
                     lane1_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
@@ -150,8 +154,9 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
-                    player_score += 1
-                    
+                    player_score += 1 * SUPER_METER_MULT
+                    if (superMeter < 100 and superMeterActive == False):
+                        superMeter += SUPER_METER_INCREASE
                     lane2_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
@@ -168,8 +173,9 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
-                    player_score += 1
-                    
+                    player_score += 1 * SUPER_METER_MULT
+                    if (superMeter < 100 and superMeterActive == False):
+                        superMeter += SUPER_METER_INCREASE
                     lane3_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
@@ -186,13 +192,19 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
-                    player_score += 1
-                    
+                    player_score += 1 * SUPER_METER_MULT
+                    if (superMeter < 100):
+                        superMeter += SUPER_METER_INCREASE
                     lane4_list.remove(lane_note)
                     note_list.remove(lane_note)
                 else:
                     player_score -= 1
                 lane4_input_cooldown = INPUT_COOLDOWN
+            
+            # Super Meter (SPACE)
+            if event.key == pygame.K_SPACE and superMeter >= 100 and superMeterActive == False:
+                superMeterActive = True
+                SUPER_METER_MULT = 5
 
 
     if songOver:
@@ -219,6 +231,8 @@ while running:
         screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
+        superText = font.render("Super Meter: " + str(superMeter), True, "white")
+        screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.05))
 
 
     if (lane1_input_cooldown > 0):
@@ -321,7 +335,7 @@ while running:
     #     elif (new_note.lane == 3):
     #         lane3_list.append(new_note)
     #     elif (new_note.lane == 4):
-    #         lane4_list.append(new_note)
+    #         lane4_list.superText = font.render("Super Meter: " + str(superMeter), True, "white")append(new_note)
     
 
     # if bsSpawnerTimer > 1000:
@@ -351,6 +365,15 @@ while running:
     text = font.render("Score: " + str(player_score), True, "white")
     pygame.display.flip()
     
+    if (superMeter >= 100 and superMeterActive == False):
+        superMeter = 100
+    if (superMeterActive == True and superMeter > 0):
+        superMeter -= 0.5
+    if (superMeter == 0 ):
+        SUPER_METER_MULT = 1
+        superMeterActive = False
+    
+
     delta_time = clock.tick(60) / 1000 # 60 tps
 
 song.close()
