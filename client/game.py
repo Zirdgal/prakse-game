@@ -27,6 +27,12 @@ lane1_input_cooldown = INPUT_COOLDOWN
 lane2_input_cooldown = INPUT_COOLDOWN
 lane3_input_cooldown = INPUT_COOLDOWN
 lane4_input_cooldown = INPUT_COOLDOWN
+
+lane1_input_boolean = False
+lane2_input_boolean = False
+lane3_input_boolean = False
+lane4_input_boolean = False
+
 lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
 lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
 lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
@@ -105,11 +111,89 @@ class Lane4_Note(Note):
     
 while running:
     for event in pygame.event.get():
+
+
         if event.type == pygame.QUIT:
             running = False
+
+
         if event.type == pygame.MOUSEBUTTONDOWN and songOver:
                 if button_rect.collidepoint(event.pos):
                    os.execv(sys.executable, ["python"] + sys.argv)
+
+            # 1st note
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_a and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
+                lane_note = None
+                highestY = -1
+                for note in lane1_list:
+                    if (note.y > highestY):
+                        highestY = note.y
+                        lane_note = note
+
+                if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
+                    player_score += 1
+                    
+                    lane1_list.remove(lane_note)
+                    note_list.remove(lane_note)
+                else:
+                    player_score -= 1
+                lane1_input_cooldown = INPUT_COOLDOWN
+
+        # 2nd note
+            if event.key == pygame.K_w and lane2_input_cooldown == 0: 
+                lane_note = None
+                highestY = -1
+                for note in lane2_list:
+                    if (note.y > highestY):
+                        highestY = note.y
+                        lane_note = note
+
+                if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
+                    player_score += 1
+                    
+                    lane2_list.remove(lane_note)
+                    note_list.remove(lane_note)
+                else:
+                    player_score -= 1
+                lane2_input_cooldown = INPUT_COOLDOWN
+
+            # 3rd note
+            if event.key == pygame.K_s and lane3_input_cooldown == 0: 
+                lane_note = None
+                highestY = -1
+                for note in lane3_list:
+                    if (note.y > highestY):
+                        highestY = note.y
+                        lane_note = note
+
+                if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
+                    player_score += 1
+                    
+                    lane3_list.remove(lane_note)
+                    note_list.remove(lane_note)
+                else:
+                    player_score -= 1
+                lane3_input_cooldown = INPUT_COOLDOWN
+            
+            # 4th note
+            if event.key == pygame.K_d and lane4_input_cooldown == 0: 
+                lane_note = None
+                highestY = -1
+                for note in lane4_list:
+                    if (note.y > highestY):
+                        highestY = note.y
+                        lane_note = note
+
+                if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
+                    player_score += 1
+                    
+                    lane4_list.remove(lane_note)
+                    note_list.remove(lane_note)
+                else:
+                    player_score -= 1
+                lane4_input_cooldown = INPUT_COOLDOWN
+
 
     if songOver:
         endingText = font.render("You finished with a score of: " + str(player_score), True, "white")
@@ -135,79 +219,6 @@ while running:
         screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
-
-    keys = pygame.key.get_pressed() # this will check every key and return a list of if each key is clicked or not in boolean form
-    # 1st note
-    if keys[pygame.K_a] == True and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
-        lane_note = None
-        highestY = -1
-        for note in lane1_list:
-            if (note.y > highestY):
-                highestY = note.y
-                lane_note = note
-
-        if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
-            player_score += 1
-            
-            lane1_list.remove(lane_note)
-            note_list.remove(lane_note)
-        else:
-            player_score -= 1
-        lane1_input_cooldown = INPUT_COOLDOWN
-
-   # 2nd note
-    if keys[pygame.K_w] == True and lane2_input_cooldown == 0: 
-        lane_note = None
-        highestY = -1
-        for note in lane2_list:
-            if (note.y > highestY):
-                highestY = note.y
-                lane_note = note
-
-        if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
-            player_score += 1
-            
-            lane2_list.remove(lane_note)
-            note_list.remove(lane_note)
-        else:
-            player_score -= 1
-        lane2_input_cooldown = INPUT_COOLDOWN
-
-    # 3rd note
-    if keys[pygame.K_s] == True and lane3_input_cooldown == 0: 
-        lane_note = None
-        highestY = -1
-        for note in lane3_list:
-            if (note.y > highestY):
-                highestY = note.y
-                lane_note = note
-
-        if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
-            player_score += 1
-            
-            lane3_list.remove(lane_note)
-            note_list.remove(lane_note)
-        else:
-            player_score -= 1
-        lane3_input_cooldown = INPUT_COOLDOWN
-    
-    # 4th note
-    if keys[pygame.K_d] == True and lane4_input_cooldown == 0: 
-        lane_note = None
-        highestY = -1
-        for note in lane4_list:
-            if (note.y > highestY):
-                highestY = note.y
-                lane_note = note
-
-        if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
-            player_score += 1
-            
-            lane4_list.remove(lane_note)
-            note_list.remove(lane_note)
-        else:
-            player_score -= 1
-        lane4_input_cooldown = INPUT_COOLDOWN
 
 
     if (lane1_input_cooldown > 0):
