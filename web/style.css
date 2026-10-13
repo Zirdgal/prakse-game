@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+    color: white;   
+}
+table, td, th {
+    border: white 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: center;
+}
+
+a {
+    color: lightblue;
+}
+a:hover {
+    color: blue;
+}
