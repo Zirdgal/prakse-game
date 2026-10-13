@@ -58,16 +58,23 @@ BASE_SCORE_INCREASE = 1
 font = pygame.font.Font(None, 32)
 text = font.render("Score: " + str(round(player_score, 3)), True, "white")
 
+inputTimingFont = pygame.font.Font(None, 72)
+INPUT_TEXT_EXPIRE_DURATION = 45
+textInputExpireTimer = 0
+textInputType = 0
+badInputText = inputTimingFont.render("BAD :C", True, "firebrick1")
+okInputText = inputTimingFont.render("OK!", True, "deepskyblue")
+perfectInputText = inputTimingFont.render("!!!PERFECT!!!", True, "gold")
+
+
 lane1_input_cooldown = INPUT_COOLDOWN
 lane2_input_cooldown = INPUT_COOLDOWN
 lane3_input_cooldown = INPUT_COOLDOWN
 lane4_input_cooldown = INPUT_COOLDOWN
-
 lane1_input_boolean = False
 lane2_input_boolean = False
 lane3_input_boolean = False
 lane4_input_boolean = False
-
 lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
 lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
 lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
@@ -146,7 +153,6 @@ while running:
                         lane_note = note
 
                 if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
-
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
                     if (superMeter < 100 and superMeterActive == False):
@@ -154,9 +160,19 @@ while running:
 
                     COMBO_METER_MULT += COMBO_METER_INCREASE
                     comboMeter += 1
-                    
+
                     lane1_list.remove(lane_note)
                     note_list.remove(lane_note)
+                    if (lane_note.y < lane1_input.y + 50 and lane_note.y > lane1_input.y - 50):
+                        if (lane_note.y < lane1_input.y + 20 and lane_note.y > lane1_input.y - 20):
+                            textInputType = 2
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        else:
+                            textInputType = 1
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                    else:
+                        textInputType = 0
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -184,6 +200,16 @@ while running:
 
                     lane2_list.remove(lane_note)
                     note_list.remove(lane_note)
+                    if (lane_note.y < lane2_input.y + 50 and lane_note.y > lane2_input.y - 50):
+                        if (lane_note.y < lane2_input.y + 20 and lane_note.y > lane2_input.y - 20):
+                            textInputType = 2
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        else:
+                            textInputType = 1
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                    else:
+                        textInputType = 0
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -211,6 +237,16 @@ while running:
 
                     lane3_list.remove(lane_note)
                     note_list.remove(lane_note)
+                    if (lane_note.y < lane3_input.y + 50 and lane_note.y > lane3_input.y - 50):
+                        if (lane_note.y < lane3_input.y + 20 and lane_note.y > lane3_input.y - 20):
+                            textInputType = 2
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        else:
+                            textInputType = 1
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                    else:
+                        textInputType = 0
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -238,6 +274,16 @@ while running:
                     
                     lane4_list.remove(lane_note)
                     note_list.remove(lane_note)
+                    if (lane_note.y < lane4_input.y + 50 and lane_note.y > lane4_input.y - 50):
+                        if (lane_note.y < lane4_input.y + 20 and lane_note.y > lane4_input.y - 20):
+                            textInputType = 2
+                            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                        else:
+                            textInputType = 1
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+                    else:
+                        textInputType = 0
+                        textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
@@ -284,6 +330,14 @@ while running:
         screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.07))
         comboText = font.render("Combo Meter: " + str(comboMeter), True, "white")
         screen.blit(comboText, (screen.get_width()/2.35, screen.get_height() /1.04))
+
+        if (textInputExpireTimer > 0):
+            if (textInputType == 0):
+                screen.blit(badInputText, (200, screen.get_height() / 4))
+            elif(textInputType == 1):
+                screen.blit(okInputText, (200, screen.get_height() / 4))
+            elif(textInputType == 2):
+                screen.blit(perfectInputText, (200, screen.get_height() / 4))
 
 
     if (lane1_input_cooldown > 0):
@@ -356,6 +410,10 @@ while running:
     text = font.render("Score: " + str(round(player_score, 3)), True, "white")
     pygame.display.flip()
     
+    if (textInputExpireTimer > 0):
+        print(textInputExpireTimer)
+        textInputExpireTimer -= 1
+
     if (superMeter >= 100 and superMeterActive == False):
         superMeter = 100
     if (superMeterActive == True and superMeter > 0):
