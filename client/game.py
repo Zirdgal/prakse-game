@@ -4,6 +4,7 @@ import sys
 import subprocess
 import json
 
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
@@ -70,6 +71,8 @@ lane3NoteImg.set_colorkey((0, 255, 255))
 lane4NoteImg = pygame.image.load(root + "/img/lane4note.png").convert()
 lane4NoteImg.set_colorkey((0, 255, 255))
 
+
+
 player_score = 0
 
 BASE_SCORE_INCREASE = 1
@@ -78,13 +81,28 @@ font = pygame.font.Font(None, 32)
 text = font.render("Score: " + str(round(player_score, 3)), True, "white")
 
 inputTimingFont = pygame.font.Font(None, 72)
-INPUT_TEXT_EXPIRE_DURATION = 45
+INPUT_TEXT_EXPIRE_DURATION = 25
 textInputExpireTimer = 0
 textInputType = 0
 badInputText = inputTimingFont.render("BAD :C", True, "firebrick1")
 okInputText = inputTimingFont.render("OK!", True, "deepskyblue")
 perfectInputText = inputTimingFont.render("!!!PERFECT!!!", True, "gold")
+missInputText = inputTimingFont.render("X MISS X", True, "red")
 
+
+# keyboard input
+
+keyBindingsFile = open(root + "/api/keybindings.json", "r")
+keyBindingsData = json.load(keyBindingsFile)
+lane1Keybinding = keyBindingsData["lane1"]
+print(lane1Keybinding)
+lane2Keybinding = keyBindingsData["lane2"]
+lane3Keybinding = keyBindingsData["lane3"]
+lane4Keybinding = keyBindingsData["lane4"]
+superKeybinding = keyBindingsData["super"]
+
+
+keyBindingsFile.close()
 
 lane1_input_cooldown = INPUT_COOLDOWN
 lane2_input_cooldown = INPUT_COOLDOWN
@@ -142,10 +160,8 @@ class Lane4_Note(Note):
 while running:
     for event in pygame.event.get():
 
-
         if event.type == pygame.QUIT:
             running = False
-
 
         if event.type == pygame.MOUSEBUTTONDOWN and songOver:
                 if button_rect.collidepoint(event.pos):
@@ -157,7 +173,7 @@ while running:
                     sys.exit()
             # 1st note
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
+            if event.key == pygame.key.key_code(lane1Keybinding) and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
                 lane_note = None
                 highestY = -1
                 for note in lane1_list:
@@ -196,7 +212,7 @@ while running:
                 lane1_input_cooldown = INPUT_COOLDOWN
 
         # 2nd note
-            if event.key == pygame.K_w and lane2_input_cooldown == 0: 
+            if event.key == pygame.key.key_code(lane2Keybinding) and lane2_input_cooldown == 0: 
                 lane_note = None
                 highestY = -1
                 for note in lane2_list:
@@ -235,7 +251,7 @@ while running:
                 lane2_input_cooldown = INPUT_COOLDOWN
 
             # 3rd note
-            if event.key == pygame.K_s and lane3_input_cooldown == 0: 
+            if event.key == pygame.key.key_code(lane3Keybinding) and lane3_input_cooldown == 0: 
                 lane_note = None
                 highestY = -1
                 for note in lane3_list:
@@ -274,7 +290,7 @@ while running:
                 lane3_input_cooldown = INPUT_COOLDOWN
             
             # 4th note
-            if event.key == pygame.K_d and lane4_input_cooldown == 0: 
+            if event.key == pygame.key.key_code(lane4Keybinding) and lane4_input_cooldown == 0: 
                 lane_note = None
                 highestY = -1
                 for note in lane4_list:
@@ -313,7 +329,7 @@ while running:
                 lane4_input_cooldown = INPUT_COOLDOWN
             
             # Super Meter (SPACE)
-            if event.key == pygame.K_SPACE and superMeter >= 100 and superMeterActive == False:
+            if event.key == pygame.key.key_code(superKeybinding) and superMeter >= 100 and superMeterActive == False:
                 superMeterActive = True
                 SUPER_METER_MULT = 5
 
@@ -355,6 +371,8 @@ while running:
                 screen.blit(okInputText, (200, screen.get_height() / 4))
             elif(textInputType == 2):
                 screen.blit(perfectInputText, (200, screen.get_height() / 4))
+            elif(textInputType == 3):
+                screen.blit(missInputText, (200, screen.get_height() / 4))
 
 
     if (lane1_input_cooldown > 0):
@@ -415,6 +433,10 @@ while running:
         if (note.pos.y > screen.get_height()):
             player_score -= 1
             comboMeter = 0
+
+            textInputType = 3
+            textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
+
             note_list.remove(note)
             if (note.lane == 1 ):
                 lane1_list.remove(note)
