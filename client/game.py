@@ -14,12 +14,13 @@ running = True
 songOver = False
 delta_time = 0
 NOTE_SIZE = 60
-NOTE_SPEED = 475
+NOTE_SPEED = 475 # 475
 INPUT_COOLDOWN = 15
 
 superMeter = 0
 SUPER_METER_INCREASE = 15
 SUPER_METER_MULT = 1
+SUPER_METER_DECAY = 0.3
 superMeterActive = False
 
 comboMeter = 0
@@ -95,13 +96,10 @@ missInputText = inputTimingFont.render("X MISS X", True, "red")
 keyBindingsFile = open(root + "/api/keybindings.json", "r")
 keyBindingsData = json.load(keyBindingsFile)
 lane1Keybinding = keyBindingsData["lane1"]
-print(lane1Keybinding)
 lane2Keybinding = keyBindingsData["lane2"]
 lane3Keybinding = keyBindingsData["lane3"]
 lane4Keybinding = keyBindingsData["lane4"]
 superKeybinding = keyBindingsData["super"]
-
-
 keyBindingsFile.close()
 
 lane1_input_cooldown = INPUT_COOLDOWN
@@ -158,6 +156,12 @@ class Lane4_Note(Note):
         super().__init__("pink", 486, 0, 4)
     
 while running:
+
+    if (superMeterActive == False):
+        screen.fill("mediumorchid4")
+    else:
+        screen.fill("darkgoldenrod4")
+
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -334,7 +338,7 @@ while running:
                 SUPER_METER_MULT = 5
 
 
-    if songOver:
+    if songOver == True:
         endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
         screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
 
@@ -349,8 +353,6 @@ while running:
         screen.blit(button2_text, (button2_rect.x, button2_rect.y))
         
     else:
-    
-        screen.fill("mediumorchid4")
 
         screen.blit(lane1InputImg, lane1InputImgPos)
         screen.blit(lane2InputImg, lane2InputImgPos)
@@ -397,27 +399,27 @@ while running:
             else:
                 songOver = True
         else:
-            j = 0
+            laneCounter = 0
             for i in songContent[songLineCounter]:
 
                 if (i == "0"):
-                    if (j == 0):
+                    if (laneCounter == 0):
                         new_note = Lane1_Note()
                         note_list.append(new_note)
                         lane1_list.append(new_note)
-                    elif (j == 1):
+                    elif (laneCounter == 1):
                         new_note = Lane2_Note()
                         note_list.append(new_note)
                         lane2_list.append(new_note)
-                    elif (j == 2):
+                    elif (laneCounter == 2):
                         new_note = Lane3_Note()
                         note_list.append(new_note)
                         lane3_list.append(new_note)
-                    elif (j == 3):
+                    elif (laneCounter == 3):
                         new_note = Lane4_Note()
                         note_list.append(new_note)
                         lane4_list.append(new_note)
-                j += 1
+                laneCounter += 1
 
 
             songLineCounter += 1
@@ -456,7 +458,7 @@ while running:
     if (superMeter >= 100 and superMeterActive == False):
         superMeter = 100
     if (superMeterActive == True and superMeter > 0):
-        superMeter -= 0.5
+        superMeter -= SUPER_METER_DECAY
     if (superMeter == 0 ):
         SUPER_METER_MULT = 1
         superMeterActive = False
