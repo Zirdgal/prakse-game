@@ -74,6 +74,20 @@ def handleSwitchingScenes(trackID: int):
     json.dump(kdata, kf, indent=4)
     kf.close()
 
+    # save username into userData.json
+    uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+    # make new data to overwrite it
+    userDataDict = {
+        "username" : userText,
+        "runs" : []
+    }
+    # set cursor to 0 position
+    uf.seek(0)
+    # update the file
+    json.dump(userDataDict, uf, indent=4)
+    uf.close()
+
+
     pygame.quit()
     venv_python = os.path.join (".venv", "bin", "python")
     subprocess.run([venv_python, "client/game.py"])
