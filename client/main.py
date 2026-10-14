@@ -16,6 +16,26 @@ button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() //
 
 logInButton_rect = pygame.Rect(200, 400, 100, 40)
 
+keybind1Rect = pygame.Rect(100, 900, 50, 50)
+keybind2Rect = pygame.Rect(200, 900, 50, 50)
+keybind3Rect = pygame.Rect(300, 900, 50, 50)
+keybind4Rect = pygame.Rect(400, 900, 50, 50)
+keybindSuperRect = pygame.Rect(500, 900, 50, 50)
+
+# keybinding.json
+root = os.getcwd()
+keyBindingsFile = open(root + "/api/keybindings.json", "r")
+keyBindingsData = json.load(keyBindingsFile)
+
+keyBindingsFile.close()
+
+keybind1RectActive = False
+keybind2RectActive = False
+keybind3RectActive = False
+keybind4RectActive = False
+keybindSuperRectActive = False
+
+
 loggedIn = False
 userText = ""
 inputActive = False
@@ -44,6 +64,25 @@ while running:
         
         usernameText = font.render("Username: " + userText, True, "white")
         screen.blit(usernameText, (100, 200))
+
+        pygame.draw.rect(screen, "blue", keybind1Rect)
+        keybind1Text = font.render(keyBindingsData["lane1"], True, "white")
+        screen.blit(keybind1Text, (keybind1Rect.x, keybind1Rect.y))
+        pygame.draw.rect(screen, "blue", keybind2Rect)
+        keybind2Text = font.render(keyBindingsData["lane2"], True, "white")
+        screen.blit(keybind2Text, (keybind2Rect.x, keybind2Rect.y))
+        pygame.draw.rect(screen, "blue", keybind3Rect)
+        keybind3Text = font.render(keyBindingsData["lane3"], True, "white")
+        screen.blit(keybind3Text, (keybind3Rect.x, keybind3Rect.y))
+        pygame.draw.rect(screen, "blue", keybind4Rect)
+        keybind4Text = font.render(keyBindingsData["lane4"], True, "white")
+        screen.blit(keybind4Text, (keybind4Rect.x, keybind4Rect.y))
+        pygame.draw.rect(screen, "blue", keybindSuperRect)
+        keybindSuperText = font.render(keyBindingsData["super"], True, "white")
+        screen.blit(keybindSuperText, (keybindSuperRect.x, keybindSuperRect.y))
+
+
+
     else:
         logInText = font.render("Please log in!", True, "white")
         screen.blit(logInText, (100, 200))
@@ -77,11 +116,33 @@ while running:
             if logInButton_rect.collidepoint(event.pos) and loggedIn == False and userText != "":
                 loggedIn = True
 
+            if keybind1Rect.collidepoint(event.pos):
+                keybind1RectActive = True
+            else:
+                keybind1RectActive = False
+            
+            if keybind2Rect.collidepoint(event.pos):
+                keybind2RectActive = True
+            else:
+                keybind2RectActive = False
+            
+            if keybind3Rect.collidepoint(event.pos):
+                keybind3RectActive = True
+            else:
+                keybind3RectActive = False
+
+            if keybind4Rect.collidepoint(event.pos):
+                keybind4RectActive = True
+            else:
+                keybind4RectActive = False
+            
+            if keybindSuperRect.collidepoint(event.pos):
+                keybindSuperRectActive = True
+            else:
+                keybindSuperRectActive = False
+
             if button1_rect.collidepoint(event.pos) and loggedIn == True:
                 path = os.path.realpath(__file__)
-                root = os.getcwd()
-
-
 
                 f = open(root + "/api/gameData.json", "r+")
                 data = json.load(f)
@@ -90,7 +151,13 @@ while running:
                 json.dump(data, f, indent=4)
                 f.close()
 
-
+                # save keybindings
+                kf = open(root + "/api/keybindings.json", "r+")
+                kdata = json.load(f)
+                kdata.update(keyBindingsData)
+                kf.seek(0)
+                json.dump(kdata, kf, indent=4)
+                kf.close()
 
                 pygame.quit()
                 venv_python = os.path.join (".venv", "bin", "python")
@@ -98,7 +165,7 @@ while running:
                 sys.exit()
             if button2_rect.collidepoint(event.pos) and loggedIn == True:
                 path = os.path.realpath(__file__)
-                root = os.getcwd()
+                
                 f = open(root + "/api/gameData.json", "r+")
                 data = json.load(f)
                 data.update({"selectedTrack": 2})
@@ -106,6 +173,13 @@ while running:
                 json.dump(data, f, indent=4)
                 f.close()
 
+                # save keybindings
+                kf = open(root + "/api/keybindings.json", "r+")
+                kdata = json.load(kf)
+                kdata.update(keyBindingsData)
+                kf.seek(0)
+                json.dump(kdata, kf, indent=4)
+                kf.close()
 
 
                 pygame.quit()
@@ -114,9 +188,27 @@ while running:
                 sys.exit()
         
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                userText = userText[:-1]
-            else:
-                userText += event.unicode
+            if inputActive == True:
+                if event.key == pygame.K_BACKSPACE:
+                    userText = userText[:-1]
+                else:
+                    userText += event.unicode
+            
+            if keybind1RectActive == True:
+                keyBindingsData["lane1"] = event.unicode
+                print(keyBindingsData["lane1"])
+            
+            if keybind2RectActive == True:
+                keyBindingsData["lane2"] = event.unicode
+
+            if keybind3RectActive == True:
+                keyBindingsData["lane3"] = event.unicode
+
+            if keybind4RectActive == True:
+                keyBindingsData["lane4"] = event.unicode
+            
+            if keybindSuperRectActive == True:
+                lanekeyBindingsData["super"] = event.unicode
+
     
     pygame.display.flip()
