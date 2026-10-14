@@ -4,7 +4,6 @@ import sys
 import subprocess
 import json
 
-# bsSpawnerTimer = 1
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((640,1080))
@@ -36,10 +35,7 @@ root = os.getcwd()
 
 f = open(root + "/game/data.json")
 data = json.load(f)
-print(data)
 SONG_ID_SELECTED = data["selectedTrack"]
-print(SONG_ID_SELECTED)
-print(data["selectedTrack"])
 f.close()
 song = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
 songContent = song.readlines()
@@ -50,6 +46,33 @@ songSpeedCounter = 1
 songLineCounter = 1
 songMaxLines = len(songContent)
 
+# images
+lane1InputImg = pygame.image.load(root + "/img/lane1input.png").convert()
+lane1InputImg.set_colorkey((0, 255, 255))
+lane1InputImgPos = pygame.Vector2(30, screen.get_height() / 1.3)
+
+lane2InputImg = pygame.image.load(root + "/img/lane2input.png").convert()
+lane2InputImg.set_colorkey((0, 255, 255))
+lane2InputImgPos = pygame.Vector2(182, screen.get_height() / 1.3)
+
+lane3InputImg = pygame.image.load(root + "/img/lane3input.png").convert()
+lane3InputImg.set_colorkey((0, 255, 255))
+lane3InputImgPos = pygame.Vector2(334, screen.get_height() / 1.3)
+
+lane4InputImg = pygame.image.load(root + "/img/lane4input.png").convert()
+lane4InputImg.set_colorkey((0, 255, 255))
+lane4InputImgPos = pygame.Vector2(486, screen.get_height() / 1.3)
+
+# note images
+
+lane1NoteImg = pygame.image.load(root + "/img/lane1note.png").convert()
+lane1NoteImg.set_colorkey((0, 255, 255))
+lane2NoteImg = pygame.image.load(root + "/img/lane2note.png").convert()
+lane2NoteImg.set_colorkey((0, 255, 255))
+lane3NoteImg = pygame.image.load(root + "/img/lane3note.png").convert()
+lane3NoteImg.set_colorkey((0, 255, 255))
+lane4NoteImg = pygame.image.load(root + "/img/lane4note.png").convert()
+lane4NoteImg.set_colorkey((0, 255, 255))
 
 player_score = 0
 
@@ -75,14 +98,14 @@ lane1_input_boolean = False
 lane2_input_boolean = False
 lane3_input_boolean = False
 lane4_input_boolean = False
-lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
-lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
-lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
-lane4_input = pygame.Vector2(546, screen.get_height() / 1.2)
-lane1_input_text = font.render("A", True, "white")
-lane2_input_text = font.render("W", True, "white")
-lane3_input_text = font.render("S", True, "white")
-lane4_input_text = font.render("D", True, "white")
+# lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
+# lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
+# lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
+# lane4_input = pygame.Vector2(546, screen.get_height() / 1.2)
+# lane1_input_text = font.render("A", True, "white")
+# lane2_input_text = font.render("W", True, "white")
+# lane3_input_text = font.render("S", True, "white")
+# lane4_input_text = font.render("D", True, "white")
 
 note_list = []
 lane1_list = []
@@ -94,37 +117,42 @@ class Note:
     def __init__ (self, colour, x, y, lane):
         self.size = NOTE_SIZE
         self.colour = colour
-        self.x = x
-        self.y = y
+        self.pos = pygame.Vector2(x, y)
         self.lane = lane
 
     def update (self):
-        self.y += NOTE_SPEED * delta_time
+        self.pos.y += NOTE_SPEED * delta_time
 
     def draw (self):
-        pygame.draw.circle(screen, self.colour, (self.x, self.y), self.size)
+        #pygame.draw.circle(screen, self.colour, (self.x, self.y), self.size)
+        if (self.lane == 1):
+            screen.blit(lane1NoteImg, self.pos)
+        elif(self.lane == 2):
+            screen.blit(lane2NoteImg, self.pos)
+        elif(self.lane == 3):
+            screen.blit(lane3NoteImg, self.pos)
+        elif(self.lane == 4):
+            screen.blit(lane4NoteImg, self.pos)
     
-    def create_note (self):
-        Note = pygame.Vector2(self.x, self.y)
-        
-        pygame.draw.circle(screen, self.colour, Note, self.size)
+    # def create_note (self):
+    #     pygame.draw.circle(screen, self.colour, self.pos, self.size)
 
 # inherits from Note class
 class Lane1_Note(Note):
     def __init__ (self):
-        super().__init__("red", 90, 0, 1)
+        super().__init__("red", 30, 0, 1)
 
 class Lane2_Note(Note):
     def __init__ (self):
-        super().__init__("yellow", 242, 0, 2)
+        super().__init__("yellow", 182, 0, 2)
     
 class Lane3_Note(Note):
     def __init__ (self):
-        super().__init__("green", 394, 0, 3)
+        super().__init__("green", 334, 0, 3)
 
 class Lane4_Note(Note):
     def __init__ (self):
-        super().__init__("pink", 546, 0, 4)
+        super().__init__("pink", 486, 0, 4)
     
 while running:
     for event in pygame.event.get():
@@ -148,11 +176,11 @@ while running:
                 lane_note = None
                 highestY = -1
                 for note in lane1_list:
-                    if (note.y > highestY):
-                        highestY = note.y
+                    if (note.pos.y > highestY):
+                        highestY = note.pos.y
                         lane_note = note
 
-                if (lane_note and lane_note.y < lane1_input.y + 100 and lane_note.y > lane1_input.y - 100):
+                if (lane_note and lane_note.pos.y < lane1InputImgPos.y + 100 and lane_note.pos.y > lane1InputImgPos.y - 100):
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
                     if (superMeter < 100 and superMeterActive == False):
@@ -163,8 +191,8 @@ while running:
 
                     lane1_list.remove(lane_note)
                     note_list.remove(lane_note)
-                    if (lane_note.y < lane1_input.y + 50 and lane_note.y > lane1_input.y - 50):
-                        if (lane_note.y < lane1_input.y + 20 and lane_note.y > lane1_input.y - 20):
+                    if (5,lane_note.pos.y < lane1InputImgPos.y + 50 and lane_note.pos.y > lane1InputImgPos.y - 50):
+                        if (lane_note.pos.y < lane1InputImgPos.y + 20 and lane_note.pos.y > lane1InputImgPos.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
@@ -187,11 +215,11 @@ while running:
                 lane_note = None
                 highestY = -1
                 for note in lane2_list:
-                    if (note.y > highestY):
-                        highestY = note.y
+                    if (note.pos.y > highestY):
+                        highestY = note.pos.y
                         lane_note = note
 
-                if (lane_note and lane_note.y < lane2_input.y + 100 and lane_note.y > lane2_input.y - 100):
+                if (lane_note and lane_note.pos.y < lane2InputImgPos.y + 100 and lane_note.pos.y > lane2InputImgPos.y - 100):
 
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
@@ -202,8 +230,8 @@ while running:
 
                     lane2_list.remove(lane_note)
                     note_list.remove(lane_note)
-                    if (lane_note.y < lane2_input.y + 50 and lane_note.y > lane2_input.y - 50):
-                        if (lane_note.y < lane2_input.y + 20 and lane_note.y > lane2_input.y - 20):
+                    if (lane_note.pos.y < lane2InputImgPos.y + 50 and lane_note.pos.y > lane2InputImgPos.y - 50):
+                        if (lane_note.pos.y < lane2InputImgPos.y + 20 and lane_note.pos.y > lane2InputImgPos.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
@@ -226,11 +254,11 @@ while running:
                 lane_note = None
                 highestY = -1
                 for note in lane3_list:
-                    if (note.y > highestY):
-                        highestY = note.y
+                    if (note.pos.y > highestY):
+                        highestY = note.pos.y
                         lane_note = note
 
-                if (lane_note and lane_note.y < lane3_input.y + 100 and lane_note.y > lane3_input.y - 100):
+                if (lane_note and lane_note.pos.y < lane3InputImgPos.y + 100 and lane_note.pos.y > lane3InputImgPos.y - 100):
 
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
@@ -241,8 +269,8 @@ while running:
 
                     lane3_list.remove(lane_note)
                     note_list.remove(lane_note)
-                    if (lane_note.y < lane3_input.y + 50 and lane_note.y > lane3_input.y - 50):
-                        if (lane_note.y < lane3_input.y + 20 and lane_note.y > lane3_input.y - 20):
+                    if (lane_note.pos.y < lane3InputImgPos.y + 50 and lane_note.pos.y > lane3InputImgPos.y - 50):
+                        if (lane_note.pos.y < lane3InputImgPos.y + 20 and lane_note.pos.y > lane3InputImgPos.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
@@ -265,11 +293,11 @@ while running:
                 lane_note = None
                 highestY = -1
                 for note in lane4_list:
-                    if (note.y > highestY):
-                        highestY = note.y
+                    if (note.pos.y > highestY):
+                        highestY = note.pos.y
                         lane_note = note
 
-                if (lane_note and lane_note.y < lane4_input.y + 100 and lane_note.y > lane4_input.y - 100):
+                if (lane_note and lane_note.pos.y < lane4InputImgPos.y + 100 and lane_note.pos.y > lane4InputImgPos.y - 100):
 
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
@@ -280,8 +308,8 @@ while running:
                     
                     lane4_list.remove(lane_note)
                     note_list.remove(lane_note)
-                    if (lane_note.y < lane4_input.y + 50 and lane_note.y > lane4_input.y - 50):
-                        if (lane_note.y < lane4_input.y + 20 and lane_note.y > lane4_input.y - 20):
+                    if (lane_note.pos.y < lane4InputImgPos.y + 50 and lane_note.pos.y > lane4InputImgPos.y - 50):
+                        if (lane_note.pos.y < lane4InputImgPos.y + 20 and lane_note.pos.y > lane4InputImgPos.y - 20):
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
@@ -323,15 +351,20 @@ while running:
     
         screen.fill("mediumorchid4")
 
-        pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
-        pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
-        pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
-        pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
+        screen.blit(lane1InputImg, lane1InputImgPos)
+        screen.blit(lane2InputImg, lane2InputImgPos)
+        screen.blit(lane3InputImg, lane3InputImgPos)
+        screen.blit(lane4InputImg, lane4InputImgPos)
 
-        screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
-        screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
-        screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
-        screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
+        # pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
+        # pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
+        # pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
+        # pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
+
+        # screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
+        # screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
+        # screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
+        # screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
@@ -404,7 +437,7 @@ while running:
         note.update()
         note.draw()
 
-        if (note.y > screen.get_height()):
+        if (note.pos.y > screen.get_height()):
             player_score -= 1
             comboMeter = 0
             note_list.remove(note)
@@ -421,7 +454,6 @@ while running:
     pygame.display.flip()
     
     if (textInputExpireTimer > 0):
-        print(textInputExpireTimer)
         textInputExpireTimer -= 1
 
     if (superMeter >= 100 and superMeterActive == False):
