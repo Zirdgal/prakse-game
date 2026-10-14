@@ -40,10 +40,20 @@ keybind4RectActive = False
 keybindSuperRectActive = False
 
 # for login
-logInButton_rect = pygame.Rect(200, 400, 100, 40)
-loggedIn = False
 userText = ""
+loggedIn = False
 inputActive = False
+# check if user isnt already logged in (the user data gets deleted on closing the application)
+usf = open(root + "/api/userData.json", "r")
+usdata = json.load(usf)
+
+if (usdata["username"] != ""):
+    userText = usdata["username"]
+    loggedIn = True
+
+usf.close()
+
+logInButton_rect = pygame.Rect(200, 400, 100, 40)
 inputRect = pygame.Rect(200,300,100,30)
 color_active = pygame.Color("lightskyblue3")
 color_inactive = pygame.Color("chartreuse4")
@@ -155,6 +165,20 @@ while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+
+            # clear username on program end
+            uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+            # make new data to overwrite it
+            userDataDict = {
+                "username" : "",
+                "runs" : []
+            }
+            # set cursor to 0 position
+            uf.seek(0)
+            # update the file
+            json.dump(userDataDict, uf, indent=4)
+            uf.close()
+
             running = False
 
         

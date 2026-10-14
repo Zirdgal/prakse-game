@@ -75,6 +75,7 @@ lane4NoteImg.set_colorkey((0, 255, 255))
 
 
 player_score = 0
+savedScore = False
 
 BASE_SCORE_INCREASE = 1
 
@@ -165,6 +166,18 @@ while running:
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
+            # clear username on program end
+            uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+            # make new data to overwrite it
+            userDataDict = {
+                "username" : "",
+                "runs" : []
+            }
+            # set cursor to 0 position
+            uf.seek(0)
+            # update the file
+            json.dump(userDataDict, uf, indent=4)
+            uf.close()
             running = False
 
         if event.type == pygame.MOUSEBUTTONDOWN and songOver:
@@ -339,6 +352,25 @@ while running:
 
 
     if songOver == True:
+
+        # save the run to userData.json file
+        if savedScore == False:
+            runScoreDict = {
+                "songID": SONG_ID_SELECTED,
+                "score": player_score
+            }
+
+            uf = open(root + "/api/userData.json", "r+")
+            udata = json.load(uf)
+            udata["runs"].append(runScoreDict)
+            udata.update(udata)
+            uf.seek(0)
+            json.dump(udata, uf, indent=4)
+            uf.close()
+            savedScore = True
+
+
+
         endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
         screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
 
