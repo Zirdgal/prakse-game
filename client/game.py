@@ -28,18 +28,14 @@ comboMeterActive = False
 
 
 # files 
-path = os.path.realpath(__file__)
-direc = os.path.dirname(path)
-
 root = os.getcwd()
-
 f = open(root + "/api/gameData.json")
 data = json.load(f)
 SONG_ID_SELECTED = data["selectedTrack"]
 f.close()
-song = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
+song = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
 songContent = song.readlines()
-songData = open(direc + "/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
+songData = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
 songDataContent = songData.readlines()
 songSpeed = int(songDataContent[1]) # second line
 songSpeedCounter = 1
@@ -98,14 +94,6 @@ lane1_input_boolean = False
 lane2_input_boolean = False
 lane3_input_boolean = False
 lane4_input_boolean = False
-# lane1_input = pygame.Vector2(90, screen.get_height() / 1.2)
-# lane2_input = pygame.Vector2(242, screen.get_height() / 1.2)
-# lane3_input = pygame.Vector2(394, screen.get_height() / 1.2)
-# lane4_input = pygame.Vector2(546, screen.get_height() / 1.2)
-# lane1_input_text = font.render("A", True, "white")
-# lane2_input_text = font.render("W", True, "white")
-# lane3_input_text = font.render("S", True, "white")
-# lane4_input_text = font.render("D", True, "white")
 
 note_list = []
 lane1_list = []
@@ -134,9 +122,6 @@ class Note:
         elif(self.lane == 4):
             screen.blit(lane4NoteImg, self.pos)
     
-    # def create_note (self):
-    #     pygame.draw.circle(screen, self.colour, self.pos, self.size)
-
 # inherits from Note class
 class Lane1_Note(Note):
     def __init__ (self):
@@ -355,16 +340,6 @@ while running:
         screen.blit(lane2InputImg, lane2InputImgPos)
         screen.blit(lane3InputImg, lane3InputImgPos)
         screen.blit(lane4InputImg, lane4InputImgPos)
-
-        # pygame.draw.circle(screen, "brown2", lane1_input, NOTE_SIZE)
-        # pygame.draw.circle(screen, "lightgoldenrod", lane2_input, NOTE_SIZE)
-        # pygame.draw.circle(screen, "lightgreen", lane3_input, NOTE_SIZE)
-        # pygame.draw.circle(screen, "lightpink2", lane4_input, NOTE_SIZE)
-
-        # screen.blit(lane1_input_text, (90, screen.get_height() / 1.2))
-        # screen.blit(lane2_input_text, (242, screen.get_height() / 1.2))
-        # screen.blit(lane3_input_text, (394, screen.get_height() / 1.2))
-        # screen.blit(lane4_input_text, (546, screen.get_height() / 1.2))
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
