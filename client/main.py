@@ -4,38 +4,43 @@ import os
 import subprocess # for file running
 import json
 
+# initialization
 pygame.init()
-
 screen = pygame.display.set_mode((640,1080))
 pygame.display.set_caption("Zird Rhythm Game")
 
+# fonts
 font = pygame.font.Font(None, 32)
 
+
+# track buttons
 button1_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 - 25, 200, 50)
 button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 75, 200, 50)
 
-logInButton_rect = pygame.Rect(200, 400, 100, 40)
 
+# keybind buttons
 keybind1Rect = pygame.Rect(100, 900, 50, 50)
 keybind2Rect = pygame.Rect(200, 900, 50, 50)
 keybind3Rect = pygame.Rect(300, 900, 50, 50)
 keybind4Rect = pygame.Rect(400, 900, 50, 50)
 keybindSuperRect = pygame.Rect(500, 900, 50, 50)
 
-# keybinding.json
+# keybindings.json
 root = os.getcwd()
 keyBindingsFile = open(root + "/api/keybindings.json", "r")
-keyBindingsData = json.load(keyBindingsFile)
+keyBindingsData = json.load(keyBindingsFile) # saved as Dict
 
 keyBindingsFile.close()
 
+# used for telling if user is trying to change keybind
 keybind1RectActive = False
 keybind2RectActive = False
 keybind3RectActive = False
 keybind4RectActive = False
 keybindSuperRectActive = False
 
-
+# for login
+logInButton_rect = pygame.Rect(200, 400, 100, 40)
 loggedIn = False
 userText = ""
 inputActive = False
@@ -44,17 +49,21 @@ color_active = pygame.Color("lightskyblue3")
 color_inactive = pygame.Color("chartreuse4")
 color = color_inactive
 
+# program loop
 running = True
-
 while running:
+    # background colour mediumorchid4 
     screen.fill("mediumorchid4")
 
+    # NOT program name, its rendered text on screen
     title_text = font.render("Zird Rhythm Game", True, "white")
     screen.blit(title_text, (100, 100))
 
+    # mouse pos
     mouse_pos = pygame.mouse.get_pos()
 
     if loggedIn == True:
+        # draws the track buttons
         pygame.draw.rect(screen, "green", button1_rect)
         pygame.draw.rect(screen, "green", button2_rect)
         button1_text = font.render("Play Track 1", True, "white")
@@ -153,7 +162,7 @@ while running:
 
                 # save keybindings
                 kf = open(root + "/api/keybindings.json", "r+")
-                kdata = json.load(f)
+                kdata = json.load(kf)
                 kdata.update(keyBindingsData)
                 kf.seek(0)
                 json.dump(kdata, kf, indent=4)
@@ -196,7 +205,6 @@ while running:
             
             if keybind1RectActive == True:
                 keyBindingsData["lane1"] = event.unicode
-                print(keyBindingsData["lane1"])
             
             if keybind2RectActive == True:
                 keyBindingsData["lane2"] = event.unicode
