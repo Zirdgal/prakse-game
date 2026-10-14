@@ -49,8 +49,36 @@ color_active = pygame.Color("lightskyblue3")
 color_inactive = pygame.Color("chartreuse4")
 color = color_inactive
 
+
 # program loop
 running = True
+
+
+# function for handling switcing python programs
+def handleSwitchingScenes(trackID: int):
+    
+    # read and write into gameData.json which handles which level the player is using on a local level
+    f = open(root + "/api/gameData.json", "r+")
+    data = json.load(f)
+    data["selectedTrack"] = trackID
+    data.update(data)
+    f.seek(0)
+    json.dump(data, f, indent=4)
+    f.close()
+
+    # save keybindings into keybindings.json
+    kf = open(root + "/api/keybindings.json", "r+")
+    kdata = json.load(kf)
+    kdata.update(keyBindingsData)
+    kf.seek(0)
+    json.dump(kdata, kf, indent=4)
+    kf.close()
+
+    pygame.quit()
+    venv_python = os.path.join (".venv", "bin", "python")
+    subprocess.run([venv_python, "client/game.py"])
+    sys.exit()
+
 while running:
     # background colour mediumorchid4 
     screen.fill("mediumorchid4")
@@ -151,50 +179,9 @@ while running:
                 keybindSuperRectActive = False
 
             if button1_rect.collidepoint(event.pos) and loggedIn == True:
-                path = os.path.realpath(__file__)
-
-                f = open(root + "/api/gameData.json", "r+")
-                data = json.load(f)
-                data.update({"selectedTrack": 1})
-                f.seek(0)
-                json.dump(data, f, indent=4)
-                f.close()
-
-                # save keybindings
-                kf = open(root + "/api/keybindings.json", "r+")
-                kdata = json.load(kf)
-                kdata.update(keyBindingsData)
-                kf.seek(0)
-                json.dump(kdata, kf, indent=4)
-                kf.close()
-
-                pygame.quit()
-                venv_python = os.path.join (".venv", "bin", "python")
-                subprocess.run([venv_python, "client/game.py"])
-                sys.exit()
+                handleSwitchingScenes(1)
             if button2_rect.collidepoint(event.pos) and loggedIn == True:
-                path = os.path.realpath(__file__)
-                
-                f = open(root + "/api/gameData.json", "r+")
-                data = json.load(f)
-                data.update({"selectedTrack": 2})
-                f.seek(0)
-                json.dump(data, f, indent=4)
-                f.close()
-
-                # save keybindings
-                kf = open(root + "/api/keybindings.json", "r+")
-                kdata = json.load(kf)
-                kdata.update(keyBindingsData)
-                kf.seek(0)
-                json.dump(kdata, kf, indent=4)
-                kf.close()
-
-
-                pygame.quit()
-                venv_python = os.path.join (".venv", "bin", "python")
-                subprocess.run([venv_python, "client/game.py"])
-                sys.exit()
+                handleSwitchingScenes(2)
         
         if event.type == pygame.KEYDOWN:
             if inputActive == True:
@@ -220,3 +207,5 @@ while running:
 
     
     pygame.display.flip()
+
+pygame.quit()
