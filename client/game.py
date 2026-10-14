@@ -33,7 +33,7 @@ direc = os.path.dirname(path)
 
 root = os.getcwd()
 
-f = open(root + "/game/data.json")
+f = open(root + "/api/gameData.json")
 data = json.load(f)
 SONG_ID_SELECTED = data["selectedTrack"]
 f.close()
