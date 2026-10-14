@@ -361,7 +361,7 @@ while running:
 
         screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
 
-        superText = font.render("Super Meter: " + str(superMeter), True, "white")
+        superText = font.render("Super Meter: " + str(round(superMeter, 3)), True, "white")
         screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.07))
         comboText = font.render("Combo Meter: " + str(comboMeter), True, "white")
         screen.blit(comboText, (screen.get_width()/2.35, screen.get_height() /1.04))
@@ -459,8 +459,9 @@ while running:
         superMeter = 100
     if (superMeterActive == True and superMeter > 0):
         superMeter -= SUPER_METER_DECAY
-    if (superMeter == 0 ):
+    if (superMeter <= 0 ):
         SUPER_METER_MULT = 1
+        superMeter = 0
         superMeterActive = False
 
     delta_time = clock.tick(60) / 1000 # 60 tps
