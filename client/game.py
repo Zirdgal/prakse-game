@@ -46,11 +46,9 @@ songSpeedCounter = 1
 songLineCounter = 1
 songMaxLines = len(songContent)
 
-if (SONG_ID_SELECTED != 1):
-
-    pygame.mixer.music.load(root + "/music/song" + str(SONG_ID_SELECTED) + ".mp3")
-    pygame.mixer.music.set_volume(1)
-    pygame.mixer.music.play()
+pygame.mixer.music.load(root + "/music/song" + str(SONG_ID_SELECTED) + ".mp3")
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play()
 
 
 # images
