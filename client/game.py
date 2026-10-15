@@ -91,7 +91,7 @@ BASE_SCORE_INCREASE = 1
 font = pygame.font.Font(None, 32)
 text = font.render("Score: " + str(round(player_score, 3)), True, "white")
 
-inputTimingFont = pygame.font.Font(None, 72)
+inputTimingFont = pygame.font.Font(None, 80)
 INPUT_TEXT_EXPIRE_DURATION = 25
 textInputExpireTimer = 0
 textInputType = 0
