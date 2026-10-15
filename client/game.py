@@ -3,10 +3,12 @@ import os
 import sys
 import subprocess
 import json
+from api_client import send_score
 
 
 # pygame setup
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((640,1080))
 pygame.display.set_caption("Zird Rhythm Game")
 clock = pygame.time.Clock()
@@ -43,6 +45,13 @@ songSpeed = int(songDataContent[1]) # second line
 songSpeedCounter = 1
 songLineCounter = 1
 songMaxLines = len(songContent)
+
+if (SONG_ID_SELECTED != 1):
+
+    pygame.mixer.music.load(root + "/music/song" + str(SONG_ID_SELECTED) + ".mp3")
+    pygame.mixer.music.set_volume(0.7)
+    pygame.mixer.music.play()
+
 
 # images
 lane1InputImg = pygame.image.load(root + "/img/lane1input.png").convert()
@@ -355,17 +364,14 @@ while running:
 
         # save the run to userData.json file
         if savedScore == False:
-            runScoreDict = {
-                "songID": SONG_ID_SELECTED,
-                "score": player_score
-            }
-
             uf = open(root + "/api/userData.json", "r+")
             udata = json.load(uf)
-            udata["runs"].append(runScoreDict)
+            udata["score"] = round(player_score, 3)
             udata.update(udata)
             uf.seek(0)
             json.dump(udata, uf, indent=4)
+            # send score to api
+            send_score(udata)
             uf.close()
             savedScore = True
 

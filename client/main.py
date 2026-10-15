@@ -89,7 +89,8 @@ def handleSwitchingScenes(trackID: int):
     # make new data to overwrite it
     userDataDict = {
         "username" : userText,
-        "runs" : []
+        "score": 0,
+        "level": trackID
     }
     # set cursor to 0 position
     uf.seek(0)
