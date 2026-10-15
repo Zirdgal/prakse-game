@@ -53,8 +53,8 @@ if (usdata["username"] != ""):
 
 usf.close()
 
-logInButton_rect = pygame.Rect(200, 400, 100, 40)
-inputRect = pygame.Rect(200,300,100,30)
+logInButton_rect = pygame.Rect(screen.get_width() // 2 - 50, 400, 100, 40)
+inputRect = pygame.Rect(screen.get_width() // 2 - 50,300,100,30)
 color_active = pygame.Color("lightskyblue3")
 color_inactive = pygame.Color("chartreuse4")
 color = color_inactive
@@ -110,7 +110,7 @@ while running:
 
     # NOT program name, its rendered text on screen
     title_text = font.render("Zird Rhythm Game", True, "white")
-    screen.blit(title_text, (100, 100))
+    screen.blit(title_text, (screen.get_width() // 2  - title_text.get_width() // 2, 100))
 
     # mouse pos
     mouse_pos = pygame.mouse.get_pos()
@@ -120,34 +120,34 @@ while running:
         pygame.draw.rect(screen, "green", button1_rect)
         pygame.draw.rect(screen, "green", button2_rect)
         button1_text = font.render("Play Track 1", True, "white")
-        screen.blit(button1_text, (button1_rect.x, button1_rect.y))
+        screen.blit(button1_text, (button1_rect.x + 5, button1_rect.y + 5))
         button2_text = font.render("Play Track 2", True, "white")
-        screen.blit(button2_text, (button2_rect.x, button2_rect.y))
+        screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
         
         usernameText = font.render("Username: " + userText, True, "white")
-        screen.blit(usernameText, (100, 200))
+        screen.blit(usernameText, (screen.get_width() // 2 - usernameText.get_width() // 2, 200))
 
         pygame.draw.rect(screen, "blue", keybind1Rect)
         keybind1Text = font.render(keyBindingsData["lane1"], True, "white")
-        screen.blit(keybind1Text, (keybind1Rect.x, keybind1Rect.y))
+        screen.blit(keybind1Text, (keybind1Rect.x + 5, keybind1Rect.y + 5))
         pygame.draw.rect(screen, "blue", keybind2Rect)
         keybind2Text = font.render(keyBindingsData["lane2"], True, "white")
-        screen.blit(keybind2Text, (keybind2Rect.x, keybind2Rect.y))
+        screen.blit(keybind2Text, (keybind2Rect.x + 5, keybind2Rect.y + 5))
         pygame.draw.rect(screen, "blue", keybind3Rect)
         keybind3Text = font.render(keyBindingsData["lane3"], True, "white")
-        screen.blit(keybind3Text, (keybind3Rect.x, keybind3Rect.y))
+        screen.blit(keybind3Text, (keybind3Rect.x + 5, keybind3Rect.y + 5))
         pygame.draw.rect(screen, "blue", keybind4Rect)
         keybind4Text = font.render(keyBindingsData["lane4"], True, "white")
-        screen.blit(keybind4Text, (keybind4Rect.x, keybind4Rect.y))
+        screen.blit(keybind4Text, (keybind4Rect.x + 5, keybind4Rect.y + 5))
         pygame.draw.rect(screen, "blue", keybindSuperRect)
         keybindSuperText = font.render(keyBindingsData["super"], True, "white")
-        screen.blit(keybindSuperText, (keybindSuperRect.x, keybindSuperRect.y))
+        screen.blit(keybindSuperText, (keybindSuperRect.x + 5, keybindSuperRect.y + 5))
 
 
 
     else:
         logInText = font.render("Please log in!", True, "white")
-        screen.blit(logInText, (100, 200))
+        screen.blit(logInText, (screen.get_width() // 2 - logInText.get_width() // 2, 200))
         pygame.draw.rect(screen, color, inputRect)
         text_surface = font.render(userText, True, "white")
         screen.blit(text_surface, (inputRect.x+5, inputRect.y+5))

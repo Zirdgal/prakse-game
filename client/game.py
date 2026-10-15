@@ -378,17 +378,17 @@ while running:
 
 
         endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
-        screen.blit(endingText, (screen.get_width()/4, screen.get_height()/2))
+        screen.blit(endingText, (screen.get_width()//2 - endingText.get_width() // 2, screen.get_height()/2))
 
         button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, 200, 50)
         pygame.draw.rect(screen, "green", button_rect)
         button_text = font.render("Play Again", True, "white")
-        screen.blit(button_text, (button_rect.x, button_rect.y))
+        screen.blit(button_text, (button_rect.x + 5, button_rect.y +5))
 
         button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 150, 200, 50)
         pygame.draw.rect(screen, "green", button2_rect)
         button2_text = font.render("MainMenu", True, "white")
-        screen.blit(button2_text, (button2_rect.x, button2_rect.y))
+        screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
         
     else:
 
@@ -397,12 +397,12 @@ while running:
         screen.blit(lane3InputImg, lane3InputImgPos)
         screen.blit(lane4InputImg, lane4InputImgPos)
 
-        screen.blit(text, (screen.get_width()/2.35, screen.get_height() /1.1))
+        screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, screen.get_height() /1.1))
 
         superText = font.render("Super Meter: " + str(round(superMeter, 3)), True, "white")
-        screen.blit(superText, (screen.get_width()/2.35, screen.get_height() /1.07))
+        screen.blit(superText, (screen.get_width() // 2 - superText.get_width() // 2, screen.get_height() /1.07))
         comboText = font.render("Combo Meter: " + str(comboMeter), True, "white")
-        screen.blit(comboText, (screen.get_width()/2.35, screen.get_height() /1.04))
+        screen.blit(comboText, (screen.get_width() // 2 - comboText.get_width() // 2, screen.get_height() /1.04))
 
         if (textInputExpireTimer > 0):
             if (textInputType == 0):
