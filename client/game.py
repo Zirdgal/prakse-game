@@ -505,4 +505,5 @@ while running:
     delta_time = clock.tick(60) / 1000 # 60 tps
 
 song.close()
+songData.close()
 pygame.quit()
