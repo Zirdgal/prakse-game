@@ -16,7 +16,8 @@ font = pygame.font.Font(None, 32)
 
 
 # track buttons
-button1_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 - 25, 200, 30)
+button1_text = font.render("Play Track 1\nLatvijas Himna", True, "white")
+button1_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 - 25, button1_text.get_width() + 30, button1_text.get_height() + 10)
 button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 75, 200, 30)
 
 
@@ -35,8 +36,8 @@ keyBindingsData = json.load(keyBindingsFile) # saved as Dict
 keyBindingsFile.close()
 
 # used for telling if user is trying to change keybind
-keybindRectInactiveCol = "blue"
-keybindRectActiveCol = "lightblue"
+keybindRectInactiveCol = "deeppink4"
+keybindRectActiveCol = "deeppink2"
 keybind1RectActive = False
 keybind1RectCol = keybindRectInactiveCol
 keybind2RectActive = False
@@ -64,8 +65,8 @@ usf.close()
 
 logInButton_rect = pygame.Rect(screen.get_width() // 2 - 50, 800, 100, 30)
 inputRect = pygame.Rect(screen.get_width() // 2 - 50,700,100,30)   
-color_active = pygame.Color("lightskyblue3")
-color_inactive = pygame.Color("chartreuse4")
+color_active = pygame.Color("deeppink2")
+color_inactive = pygame.Color("deeppink4")
 color = color_inactive
 
 
@@ -126,12 +127,11 @@ while running:
 
     if loggedIn == True:
         # draws the track buttons
-        pygame.draw.rect(screen, "green", button1_rect)
-        pygame.draw.rect(screen, "green", button2_rect)
-        button1_text = font.render("Play Track 1", True, "white")
+        pygame.draw.rect(screen, "deeppink", button1_rect)
+        # pygame.draw.rect(screen, "deeppink", button2_rect)
         screen.blit(button1_text, (button1_rect.x + 5, button1_rect.y + 5))
-        button2_text = font.render("Play Track 2", True, "white")
-        screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
+        # button2_text = font.render("Play Track 2", True, "white")
+        # screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
         
         usernameText = font.render("Username: " + userText, True, "white")
         screen.blit(usernameText, (screen.get_width() // 2 - usernameText.get_width() // 2, 350))
@@ -166,7 +166,7 @@ while running:
 
         
         logInButtonText = font.render("LogIn", True, "white")
-        pygame.draw.rect(screen, "green", logInButton_rect)
+        pygame.draw.rect(screen, "deeppink", logInButton_rect)
         screen.blit(logInButtonText, (logInButton_rect.x + 5, logInButton_rect.y + 5))
 
 
@@ -256,8 +256,8 @@ while running:
 
             if button1_rect.collidepoint(event.pos) and loggedIn == True:
                 handleSwitchingScenes(1)
-            if button2_rect.collidepoint(event.pos) and loggedIn == True:
-                handleSwitchingScenes(2)
+            # if button2_rect.collidepoint(event.pos) and loggedIn == True:
+            #     handleSwitchingScenes(2)
         
         if event.type == pygame.KEYDOWN:
             if inputActive == True:
