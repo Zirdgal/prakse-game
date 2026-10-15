@@ -23,6 +23,6 @@ def add_score(item: Score):
 def top():
     with get_connection() as conn:
         rows = conn.execute(
-            "SELECT username, score FROM scores "
+            "SELECT username, score, level FROM scores "
             "ORDER BY score DESC LIMIT 10").fetchall()
     return [{"username": p, "score": s, "level": l} for p, s, l in rows]
