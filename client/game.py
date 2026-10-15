@@ -170,7 +170,7 @@ while running:
     if (superMeterActive == False):
         screen.fill("mediumorchid4")
     else:
-        screen.fill("darkgoldenrod4")
+        screen.fill("darkgoldenrod2")
 
     for event in pygame.event.get():
 
@@ -406,13 +406,13 @@ while running:
 
         if (textInputExpireTimer > 0):
             if (textInputType == 0):
-                screen.blit(badInputText, (200, screen.get_height() / 4))
+                screen.blit(badInputText, (screen.get_width() // 2 - badInputText.get_width() // 2, screen.get_height() / 4))
             elif(textInputType == 1):
-                screen.blit(okInputText, (200, screen.get_height() / 4))
+                screen.blit(okInputText, (screen.get_width() // 2 - okInputText.get_width() // 2, screen.get_height() / 4))
             elif(textInputType == 2):
-                screen.blit(perfectInputText, (200, screen.get_height() / 4))
+                screen.blit(perfectInputText, (screen.get_width() // 2 - perfectInputText.get_width() // 2, screen.get_height() / 4))
             elif(textInputType == 3):
-                screen.blit(missInputText, (200, screen.get_height() / 4))
+                screen.blit(missInputText, (screen.get_width() // 2 - missInputText.get_width() // 2, screen.get_height() / 4))
 
 
     if (lane1_input_cooldown > 0):
