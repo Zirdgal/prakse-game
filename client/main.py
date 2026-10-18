@@ -20,6 +20,8 @@ button1_text = font.render("Play Track 1\nLatvijas Himna", True, "white")
 button1_rect = pygame.Rect(screen.get_width() // 2 - button1_text.get_width() // 2, screen.get_height() // 2 - 25, button1_text.get_width() + 30, button1_text.get_height() + 10)
 button2_text = font.render("Play Track 2\nThrough Patches of Violet\nMili", True, "white")
 button2_rect = pygame.Rect(screen.get_width() // 2 - button2_text.get_width() // 2, screen.get_height() // 2 + 50, button2_text.get_width() + 30, button2_text.get_height() + 10)
+button3_text = font.render("Play Track 3\nMouiiyo\nKocchi no Kento", True, "white")
+button3_rect = pygame.Rect(screen.get_width() // 2 - button3_text.get_width() // 2, screen.get_height() // 2 + 150, button3_text.get_width() + 30, button3_text.get_height() + 10)
 
 
 # keybind buttons
@@ -130,8 +132,10 @@ while running:
         # draws the track buttons
         pygame.draw.rect(screen, "deeppink", button1_rect)
         pygame.draw.rect(screen, "deeppink", button2_rect)
+        pygame.draw.rect(screen, "deeppink", button3_rect)
         screen.blit(button1_text, (button1_rect.x + 5, button1_rect.y + 5))
         screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
+        screen.blit(button3_text, (button3_rect.x + 5, button3_rect.y + 5))
         
         usernameText = font.render("Username: " + userText, True, "white")
         screen.blit(usernameText, (screen.get_width() // 2 - usernameText.get_width() // 2, 350))
@@ -258,6 +262,8 @@ while running:
                 handleSwitchingScenes(1)
             if button2_rect.collidepoint(event.pos) and loggedIn == True:
                 handleSwitchingScenes(2)
+            if button3_rect.collidepoint(event.pos) and loggedIn == True:
+                handleSwitchingScenes(3)
         
         if event.type == pygame.KEYDOWN:
             if inputActive == True:

@@ -49,7 +49,7 @@ songLineCounter = 1
 
 
 
-pygame.mixer.music.load(root + "/music/song2.mp3")
+pygame.mixer.music.load(root + "/music/song" + str(SONG_ID_SELECTED) + ".mp3")
 pygame.mixer.music.set_volume(1.0)
 pygame.mixer.music.play()
 

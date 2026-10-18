@@ -3,7 +3,7 @@ import random
 
 root = os.getcwd()
 
-SONG_ID_SELECTED = 2
+SONG_ID_SELECTED = 0
 song = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
 songContent = song.readlines()
 songMaxLines = 1
