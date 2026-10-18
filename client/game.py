@@ -9,7 +9,7 @@ from api_client import send_score
 # pygame setup
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((640,1080))
+screen = pygame.display.set_mode((640,1000))
 pygame.display.set_caption("Zird Rhythm Game")
 clock = pygame.time.Clock()
 running = True
