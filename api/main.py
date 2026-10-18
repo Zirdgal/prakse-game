@@ -43,3 +43,15 @@ def leaderboard(request: Request):
 @app.get("/rules")
 def rulesPage(request: Request):
     return templates.TemplateResponse(request, "rules.html")
+
+# players
+
+@app.get("/players/{name}")
+def playerPage(request: Request, name: str):
+    with get_connection() as conn:
+        rows = conn.execute("SELECT score FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchall()
+        
+        if not rows:
+            pass
+        results = [row[0] for row in rows]
+        return templates.TemplateResponse(request, "player.html", {"scores": results})
