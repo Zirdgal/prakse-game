@@ -380,14 +380,14 @@ while running:
         endingText = font.render("You finished with a score of: " + str(round(player_score, 3)), True, "white")
         screen.blit(endingText, (screen.get_width()//2 - endingText.get_width() // 2, screen.get_height()/2))
 
-        button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, 200, 50)
-        pygame.draw.rect(screen, "green", button_rect)
         button_text = font.render("Play Again", True, "white")
+        button_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 50, button1_text.get_width() + 30, button1_text.get_height() + 10)
+        pygame.draw.rect(screen, "deeppink", button_rect)
         screen.blit(button_text, (button_rect.x + 5, button_rect.y +5))
 
-        button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 150, 200, 50)
-        pygame.draw.rect(screen, "green", button2_rect)
         button2_text = font.render("MainMenu", True, "white")
+        button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 150, button2_text.get_width() + 30, button2_text.get_height() + 10)
+        pygame.draw.rect(screen, "deeppink", button2_rect)
         screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
         
     else:
