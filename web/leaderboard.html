@@ -20,9 +20,9 @@
         {% for s in scores %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td>{{ loop.username}}</td>
-            <td>{{ loop.score}}</td>
-            <td>{{ loop.level}}</td>
+            <td>{{ s.username}}</td>
+            <td>{{ s.score}}</td>
+            <td>{{ s.level}}</td>
         </tr>
         {% endfor %}
     </table>
