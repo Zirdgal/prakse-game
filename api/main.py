@@ -50,13 +50,13 @@ def playerPage(request: Request, name: str):
     with get_connection() as conn:
         rows = conn.execute("SELECT score, level FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchall()
         results = [{"score": s, "level": l} for s, l in rows]
-        return templates.TemplateResponse(request, "player.html", {"scores": results, "playerName": name})
+        return templates.TemplateResponse(request, "player.html", {"scores": results, "username": name, "gamesPlayed": len(results), "best": results[0]})
 
 
 # endpoint for player statistics
 @app.get("/players/{name}/stats")
 def player_stats(name: str):
     with get_connection() as conn:
-        rows = conn.execute(
-            "SELECT score, level FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchone()
-    return [{"username": p, "score": s, "level": l} for p, s, l in rows]
+        gamesPlayed, bestScore = conn.execute(
+            "SELECT COUNT(*), MAX(score) FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchone()
+    return {"username" : name, "games": gamesPlayed, "bestScore": bestScore }
