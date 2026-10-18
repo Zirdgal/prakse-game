@@ -14,8 +14,8 @@ scores = []       # pagaidām saraksts atmiņā
 
 app = fastapi.FastAPI()
 
-app.mount("/static", StaticFiles(directory="web"), name="static")
-templates = Jinja2Templates(directory="web")
+app.mount("/static", StaticFiles(directory="api/static"), name="static")
+templates = Jinja2Templates(directory="api/templates")
 
 
 @app.post("/scores", status_code=201)
