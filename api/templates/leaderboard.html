@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zird Rhythm Game</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% extends "base.html" %}
+{% block title %}Zird Rhythm Game - Leaderboard{% endblock %}
+
+{% block content %}
 <body>
 
     <h1>Leaderboard:</h1>
@@ -27,6 +23,5 @@
         {% endfor %}
     </table>
 
-    <a href="/rules">See the Rules!</a>
 </body>
-</html>
+{% endblock %}

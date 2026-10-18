@@ -1,6 +1,7 @@
 body {
     background-color: purple;
-    color: white;   
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 table, td, th {
     border: white 1px solid;
@@ -14,4 +15,33 @@ a {
 }
 a:hover {
     color: blue;
+}
+
+
+nav {
+    background-color: rgb(99, 0, 99);
+    display: flex;
+    max-width:fit-content;
+    flex-direction: row;
+    border-radius: 5px 50px 5px 80px;
+    padding: 10px;
+    float: right;
+}
+
+nav > a {
+    text-decoration: none;
+    text-align: center;
+    padding: 5px 15px;
+    color: pink;
+    font-weight: bold;
+}
+
+nav > a:hover {
+    color: hotpink;
+}
+
+.nav-spacer {
+    width: 1px;
+    border-radius: 50%;
+    background-color: darkviolet;
 }
