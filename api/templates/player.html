@@ -8,25 +8,24 @@
 </head>
 <body>
 
-    <h1>Player:</h1>
+    <h1>Player: {{playerName}}</h1>
 
     <table>
         <tr>
             <th>Nr</th>
-            <th>Username</th>
             <th>Score</th>
             <th>Level</th>
         </tr>
         {% for s in scores %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td>{{ s.username}}</td>
-            <td>{{ s.score}}</td>
-            <td>{{ s.level}}</td>
+            <td>{{ s.score }}</td>
+            <td>{{ s.level }}</td>
         </tr>
         {% endfor %}
     </table>
 
     <a href="/rules">See the Rules!</a>
+    <a href="/">See the Leaderboard!</a>
 </body>
 </html>

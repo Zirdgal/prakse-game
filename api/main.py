@@ -49,9 +49,6 @@ def rulesPage(request: Request):
 @app.get("/players/{name}")
 def playerPage(request: Request, name: str):
     with get_connection() as conn:
-        rows = conn.execute("SELECT username, level, score FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchall()
-        
-        if not rows:
-            pass
-        results = [{"username": p, "score": s, "level": l} for p, s, l in rows]
-        return templates.TemplateResponse(request, "player.html", {"scores": results})
+        rows = conn.execute("SELECT score, level FROM scores WHERE username = ? ORDER BY score DESC", (name,)).fetchall()
+        results = [{"score": s, "level": l} for s, l in rows]
+        return templates.TemplateResponse(request, "player.html", {"scores": results, "playerName": name})
