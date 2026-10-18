@@ -28,16 +28,15 @@ def add_score(item: Score):
 
 # top 10 scores
 @app.get("/scores/top")
-def top():
+def top(levelID: int):
     with get_connection() as conn:
         rows = conn.execute(
-            "SELECT username, score, level FROM scores "
-            "ORDER BY score DESC LIMIT 10").fetchall()
-    return [{"username": p, "score": s, "level": l} for p, s, l in rows]
+            "SELECT username, score FROM scores WHERE level = ? ORDER BY score DESC LIMIT 10", (levelID,)).fetchall()
+    return [{"username": p, "score": s} for p, s in rows]
 
 @app.get("/")
 def leaderboard(request: Request):
-    return templates.TemplateResponse(request, "leaderboard.html", {"scores": top()})
+    return templates.TemplateResponse(request, "leaderboard.html", {"scores1": top(1), "scores2": top(2), "scores3": top(3)})
     
 # rules page
 @app.get("/rules")

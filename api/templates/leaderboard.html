@@ -4,21 +4,53 @@
 {% block content %}
 <body>
 
-    <h1>Leaderboard:</h1>
+    <h1>Leaderboard 1:</h1>
 
     <table>
         <tr>
             <th>Nr</th>
             <th>Username</th>
             <th>Score</th>
-            <th>Level</th>
         </tr>
-        {% for s in scores %}
+        {% for s in scores1 %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>{{ s.username}}</td>
             <td>{{ s.score}}</td>
-            <td>{{ s.level}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Leaderboard 2:</h1>
+
+    <table>
+        <tr>
+            <th>Nr</th>
+            <th>Username</th>
+            <th>Score</th>
+        </tr>
+        {% for s in scores2 %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s.username}}</td>
+            <td>{{ s.score}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Leaderboard 3:</h1>
+
+    <table>
+        <tr>
+            <th>Nr</th>
+            <th>Username</th>
+            <th>Score</th>
+        </tr>
+        {% for s in scores3 %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s.username}}</td>
+            <td>{{ s.score}}</td>
         </tr>
         {% endfor %}
     </table>
