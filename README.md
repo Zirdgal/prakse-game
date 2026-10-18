@@ -1,2 +1,47 @@
-# prakse-game
- practical work yippieee
+# Zird Rhythm Game
+
+Rhythm game about tapping notes. Read more about it in DESIGN.md
+
+## First Time Installation 
+
+- Required `Python 3.11` or higher.   
+- All commands should be ran in the `prakse-game` folder.  
+### If you are on Windows (Powershell)
+```
+python -m venv .venv
+.venv\Scripts\active.ps1
+pip install -r requirements.txt
+```
+### If you are on MacOS or Linux
+```
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Launch a Server
+
+- Open a terminal in the `prakse-game` folder. It will stay open as long as you want your Server to be open for.
+
+### Run the following command
+```
+uvicorn api.main:app --reload
+```
+
+## Run the Game
+
+- Open a `new` terminal in the `prakse-game` folder.
+
+### Run the following command
+```
+python -m client.main
+```
+
+## Play the game
+
+- For detailed instructions visit DESIGN.md.
+
+## View your results in a **local** leaderboard
+
+- Open https://localhost:8000/ to view the leaderboard
+

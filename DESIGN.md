@@ -1,4 +1,4 @@
-# Untitled Rhythm game
+# Zird Rhythm game
 
 ## Genre
 **Rhythm game**, similar to Dance Dance Revolution and Friday Night Funkin'
