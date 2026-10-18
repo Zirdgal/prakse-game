@@ -63,3 +63,6 @@ python -m client.main
 
 - Username has a 15 character limit, score wont be saved if it's negative. Data is stored locally in `/api/game.db`
 
+## Example Game Screenshot
+
+![Screenshot of Mouiiyo](./img/gameExampleScreenshot.png)
