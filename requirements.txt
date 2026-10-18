@@ -1,1 +1,1 @@
-pip install pygame-ce fastapi uvicorn pylint requests
+pygame-ce fastapi uvicorn pylint requests
