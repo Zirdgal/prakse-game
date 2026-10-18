@@ -361,15 +361,18 @@ while running:
 
         # save the run to userData.json file
         if savedScore == False:
-            uf = open(root + "/game/userData.json", "r+")
-            udata = json.load(uf)
-            udata["score"] = round(player_score, 3)
-            udata.update(udata)
-            uf.seek(0)
-            json.dump(udata, uf, indent=4)
-            # send score to api
-            send_score(udata)
-            uf.close()
+
+            if (player_score > 0):
+
+                uf = open(root + "/game/userData.json", "r+")
+                udata = json.load(uf)
+                udata["score"] = round(player_score, 3)
+                udata.update(udata)
+                uf.seek(0)
+                json.dump(udata, uf, indent=4)
+                # send score to api
+                send_score(udata)
+                uf.close()
             savedScore = True
 
 
