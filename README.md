@@ -6,10 +6,17 @@ Rhythm game about tapping notes. Read more about it in DESIGN.md
 
 - Required `Python 3.11` or higher.   
 - All commands should be ran in the `prakse-game` folder.  
+- Run all commands `one by one` instead of copying the whole list.
 ### If you are on Windows (Powershell)
 ```
 python -m venv .venv
 .venv\Scripts\active.ps1
+pip install -r requirements.txt
+```
+### If you are on Windows (Command Line)
+```
+python -m venv .venv
+.venv\Scripts\active.bat
 pip install -r requirements.txt
 ```
 ### If you are on MacOS or Linux
