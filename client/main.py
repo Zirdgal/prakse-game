@@ -267,9 +267,11 @@ while running:
         if event.type == pygame.KEYDOWN:
             if inputActive == True:
                 if event.key == pygame.K_BACKSPACE:
-                    userText = userText[:-1]
-                else:
-                    userText += event.unicode
+                        userText = userText[:-1]
+
+                for i in range(pygame.K_a, pygame.K_z + 1):
+                    if (event.key == i and len(userText) < 15):
+                        userText += event.unicode
             
             if keybind1RectActive == True:
                 keyBindingsData["lane1"] = event.unicode

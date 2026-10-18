@@ -16,6 +16,9 @@ a {
 a:hover {
     color: blue;
 }
+h1 {
+    font-size: 3vh;
+}
 
 
 nav {
@@ -44,4 +47,16 @@ nav > a:hover {
     width: 1px;
     border-radius: 50%;
     background-color: darkviolet;
+}
+
+
+.leaderboard-container {
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: row;
+}
+.leaderboard-container > span {
+    max-width: 50vw;
+    min-width: 25vw;
+    padding: 1vh 2vw;
 }

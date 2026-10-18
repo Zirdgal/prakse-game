@@ -4,56 +4,67 @@
 {% block content %}
 <body>
 
-    <h1>Leaderboard 1:</h1>
+    <div class="leaderboard-container">
 
-    <table>
-        <tr>
-            <th>Nr</th>
-            <th>Username</th>
-            <th>Score</th>
-        </tr>
-        {% for s in scores1 %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ s.username}}</td>
-            <td>{{ s.score}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <span>
+            <h1>Leaderboard 1 (Latvijas Himna):</h1>
 
-    <h1>Leaderboard 2:</h1>
+            <table>
+                <tr>
+                    <th>Nr</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+                {% for s in scores1 %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ s.username}}</td>
+                    <td>{{ s.score}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </span>
+        <span>
+            <h1>Leaderboard 2 (Through Patches of Violet):</h1>
 
-    <table>
-        <tr>
-            <th>Nr</th>
-            <th>Username</th>
-            <th>Score</th>
-        </tr>
-        {% for s in scores2 %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ s.username}}</td>
-            <td>{{ s.score}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+            <table>
+                <tr>
+                    <th>Nr</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+                {% for s in scores2 %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ s.username}}</td>
+                    <td>{{ s.score}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </span>
+        <span>
+            <h1>Leaderboard 3 (Mouiiyo):</h1>
 
-    <h1>Leaderboard 3:</h1>
+            <table>
+                <tr>
+                    <th>Nr</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+                {% for s in scores3 %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ s.username}}</td>
+                    <td>{{ s.score}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </span>
 
-    <table>
-        <tr>
-            <th>Nr</th>
-            <th>Username</th>
-            <th>Score</th>
-        </tr>
-        {% for s in scores3 %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ s.username}}</td>
-            <td>{{ s.score}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+
+    </div>
+    
+
 
 </body>
 {% endblock %}
