@@ -113,7 +113,6 @@ def handleSwitchingScenes(trackID: int):
 
 
     pygame.quit()
-    venv_python = os.path.join (".venv", "bin", "python")
     subprocess.run([sys.executable, "client/game.py"])
     sys.exit()
 

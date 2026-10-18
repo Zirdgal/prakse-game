@@ -192,8 +192,7 @@ while running:
                    os.execv(sys.executable, ["python"] + sys.argv)
                 if button2_rect.collidepoint(event.pos):
                     pygame.quit()
-                    venv_python = os.path.join (".venv", "bin", "python")
-                    subprocess.run([venv_python, "client/main.py"])
+                    subprocess.run([sys.executable, "client/main.py"])
                     sys.exit()
             # 1st note
         if event.type == pygame.KEYDOWN:
