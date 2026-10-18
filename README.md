@@ -52,3 +52,14 @@ python -m client.main
 
 - Open https://localhost:8000/ to view the leaderboard
 
+
+## REST API
+
+| Method | Address                 | What does it do                                                           | Response  | 
+|--------|-------------------------|---------------------------------------------------------------------------|-----------|
+| POST   | `/scores`               | Save results in {"username": "username", "score": 123, "level": 2} format | 201       |
+| GET    | `/scores/top`           | Returns the top 10 game results                                           | 200       |
+| GET    | `/players/{name}/stats` | Returns player `username`, `bestScore` and `gamesPlayed`                  | 200 / 404 |
+
+- Username has a 15 character limit, score wont be saved if it's negative. Data is stored locally in `/api/game.db`
+

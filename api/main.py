@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import fastapi
 from fastapi import Request
 from fastapi.staticfiles import StaticFiles
@@ -6,9 +6,11 @@ from fastapi.templating import Jinja2Templates
 from api.db import get_connection
 
 class Score(BaseModel):
-    username: str
-    score: float
-    level: int
+    username: str = Field(min_length=1, max_length=15)
+    score: float = Field(ge=0)
+    level: int = Field(ge=0)
+
+# ge = Greater than or Equal to
 
 scores = []       # pagaidām saraksts atmiņā
 
