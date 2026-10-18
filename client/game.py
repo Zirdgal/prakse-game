@@ -33,13 +33,13 @@ comboMeterActive = False
 
 # files 
 root = os.getcwd()
-f = open(root + "/api/gameData.json")
+f = open(root + "/game/gameData.json")
 data = json.load(f)
 SONG_ID_SELECTED = data["selectedTrack"]
 f.close()
-song = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
+song = open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
 songContent = song.readlines()
-songData = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
+songData = open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
 songDataContent = songData.readlines()
 songSpeed = int(songDataContent[1]) # second line
 songSpeedCounter = 1
@@ -101,7 +101,7 @@ missInputText = inputTimingFont.render("X MISS X", True, "red")
 
 # keyboard input
 
-keyBindingsFile = open(root + "/api/keybindings.json", "r")
+keyBindingsFile = open(root + "/game/keybindings.json", "r")
 keyBindingsData = json.load(keyBindingsFile)
 lane1Keybinding = keyBindingsData["lane1"]
 lane2Keybinding = keyBindingsData["lane2"]
@@ -174,7 +174,7 @@ while running:
 
         if event.type == pygame.QUIT:
             # clear username on program end
-            uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+            uf = open(root + "/game/userData.json", "w") # w is added because i want to overwrite data
             # make new data to overwrite it
             userDataDict = {
                 "username" : "",
@@ -361,7 +361,7 @@ while running:
 
         # save the run to userData.json file
         if savedScore == False:
-            uf = open(root + "/api/userData.json", "r+")
+            uf = open(root + "/game/userData.json", "r+")
             udata = json.load(uf)
             udata["score"] = round(player_score, 3)
             udata.update(udata)

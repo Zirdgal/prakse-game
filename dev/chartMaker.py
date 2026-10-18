@@ -41,7 +41,7 @@ chart = []
 nextInput = "...."
 
 
-songData = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
+songData = open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/data.txt", "r")
 songDataContent = songData.readlines()
 songSpeed = int(songDataContent[1]) # second line
 songSpeedCounter = 1
@@ -378,7 +378,7 @@ while running:
 
         if savedScore == False:
             # update the file
-            with open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "w") as song:
+            with open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "w") as song:
                 for line in chart:
                     song.write(line + "\n")
             song.close()

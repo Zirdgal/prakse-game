@@ -33,7 +33,7 @@ keybindSuperRect = pygame.Rect(500, 900, 100, 30)
 
 # keybindings.json
 root = os.getcwd()
-keyBindingsFile = open(root + "/api/keybindings.json", "r")
+keyBindingsFile = open(root + "/game/keybindings.json", "r")
 keyBindingsData = json.load(keyBindingsFile) # saved as Dict
 
 keyBindingsFile.close()
@@ -57,7 +57,7 @@ userText = ""
 loggedIn = False
 inputActive = False
 # check if user isnt already logged in (the user data gets deleted on closing the application)
-usf = open(root + "/api/userData.json", "r")
+usf = open(root + "/game/userData.json", "r")
 usdata = json.load(usf)
 
 if (usdata["username"] != ""):
@@ -81,7 +81,7 @@ running = True
 def handleSwitchingScenes(trackID: int):
     
     # read and write into gameData.json which handles which level the player is using on a local level
-    f = open(root + "/api/gameData.json", "r+")
+    f = open(root + "/game/gameData.json", "r+")
     data = json.load(f)
     data["selectedTrack"] = trackID
     data.update(data)
@@ -90,7 +90,7 @@ def handleSwitchingScenes(trackID: int):
     f.close()
 
     # save keybindings into keybindings.json
-    kf = open(root + "/api/keybindings.json", "r+")
+    kf = open(root + "/game/keybindings.json", "r+")
     kdata = json.load(kf)
     kdata.update(keyBindingsData)
     kf.seek(0)
@@ -98,7 +98,7 @@ def handleSwitchingScenes(trackID: int):
     kf.close()
 
     # save username into userData.json
-    uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+    uf = open(root + "/game/userData.json", "w") # w is added because i want to overwrite data
     # make new data to overwrite it
     userDataDict = {
         "username" : userText,
@@ -208,7 +208,7 @@ while running:
         if event.type == pygame.QUIT:
 
             # clear username on program end
-            uf = open(root + "/api/userData.json", "w") # w is added because i want to overwrite data
+            uf = open(root + "/game/userData.json", "w") # w is added because i want to overwrite data
             # make new data to overwrite it
             userDataDict = {
                 "username" : "",

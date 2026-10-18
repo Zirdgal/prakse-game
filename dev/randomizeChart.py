@@ -4,7 +4,7 @@ import random
 root = os.getcwd()
 
 SONG_ID_SELECTED = 0
-song = open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
+song = open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "r")
 songContent = song.readlines()
 songMaxLines = 1
 songMaxLines = len(songContent)
@@ -55,7 +55,7 @@ for lane in songContent:
         
 
 # save to file
-with open(root + "/client/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "w") as song:
+with open(root + "/game/charts/" + str(SONG_ID_SELECTED) + "/song.txt", "w") as song:
     for line in copyOfSongContent:
         song.write(line + "\n")
 
