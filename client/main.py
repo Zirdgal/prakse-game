@@ -286,7 +286,7 @@ while running:
                 keyBindingsData["lane4"] = event.unicode
             
             if keybindSuperRectActive == True:
-                lanekeyBindingsData["super"] = event.unicode
+                keyBindingsData["super"] = event.unicode
 
     
     pygame.display.flip()
