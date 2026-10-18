@@ -6,7 +6,7 @@ import json
 
 # initialization
 pygame.init()
-screen = pygame.display.set_mode((640,1080))
+screen = pygame.display.set_mode((640,1000))
 pygame.display.set_caption("Zird Rhythm Game")
 
 # fonts
@@ -111,7 +111,7 @@ def handleSwitchingScenes(trackID: int):
 
     pygame.quit()
     venv_python = os.path.join (".venv", "bin", "python")
-    subprocess.run([venv_python, "client/game.py"])
+    subprocess.run([sys.executable, "client/game.py"])
     sys.exit()
 
 while running:
