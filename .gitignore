@@ -1,3 +1,5 @@
 *.db
 */__pycache__
 ./venv/
+game/gameData.json
+game/keybindings.json
