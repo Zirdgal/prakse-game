@@ -125,6 +125,14 @@ lane2_list = []
 lane3_list = []
 lane4_list = []
 
+# ending data
+missInputCounter = 0
+badInputCounter = 0
+okInputCounter = 0
+perfectInputCounter = 0
+highestCombo = 0
+
+
 class Note: 
     def __init__ (self, colour, x, y, lane):
         self.size = NOTE_SIZE
@@ -218,6 +226,8 @@ while running:
 
                     
                     comboMeter += 1
+                    if (comboMeter > highestCombo):
+                        highestCombo = comboMeter
 
                     lane1_list.remove(lane_note)
                     note_list.remove(lane_note)
@@ -226,18 +236,23 @@ while running:
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
+
+                            perfectInputCounter += 1
                         else:
                             textInputType = 1
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 2
+                            okInputCounter += 1
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                         COMBO_METER_MULT += COMBO_METER_INCREASE
+                        badInputCounter += 1
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
                     comboMeter = 0
+                    missInputCounter += 1
                 lane1_input_cooldown = INPUT_COOLDOWN
 
         # 2nd note
@@ -257,6 +272,8 @@ while running:
                         superMeter += SUPER_METER_INCREASE
 
                     comboMeter += 1
+                    if (comboMeter > highestCombo):
+                        highestCombo = comboMeter
 
                     lane2_list.remove(lane_note)
                     note_list.remove(lane_note)
@@ -265,18 +282,22 @@ while running:
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
+                            perfectInputCounter += 1
                         else:
                             textInputType = 1
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 2
+                            okInputCounter += 1
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                         COMBO_METER_MULT += COMBO_METER_INCREASE
+                        badInputCounter += 1
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
                     comboMeter = 0
+                    missInputCounter += 1
                 lane2_input_cooldown = INPUT_COOLDOWN
 
             # 3rd note
@@ -296,6 +317,8 @@ while running:
                         superMeter += SUPER_METER_INCREASE
                     
                     comboMeter += 1
+                    if (comboMeter > highestCombo):
+                        highestCombo = comboMeter
 
                     lane3_list.remove(lane_note)
                     note_list.remove(lane_note)
@@ -304,18 +327,22 @@ while running:
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
+                            perfectInputCounter += 1
                         else:
                             textInputType = 1
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 2
+                            okInputCounter += 1
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                         COMBO_METER_MULT += COMBO_METER_INCREASE
+                        badInputCounter += 1
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
                     comboMeter = 0
+                    missInputCounter += 1
                 lane3_input_cooldown = INPUT_COOLDOWN
             
             # 4th note
@@ -335,6 +362,8 @@ while running:
                         superMeter += SUPER_METER_INCREASE
 
                     comboMeter += 1
+                    if (comboMeter > highestCombo):
+                        highestCombo = comboMeter
                     
                     lane4_list.remove(lane_note)
                     note_list.remove(lane_note)
@@ -343,18 +372,22 @@ while running:
                             textInputType = 2
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 3
+                            perfectInputCounter += 1
                         else:
                             textInputType = 1
                             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                             COMBO_METER_MULT += COMBO_METER_INCREASE * 2
+                            okInputCounter += 1
                     else:
                         textInputType = 0
                         textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
                         COMBO_METER_MULT += COMBO_METER_INCREASE
+                        badInputCounter += 1
                 else:
                     player_score -= 1
                     COMBO_METER_MULT = 1
                     comboMeter = 0
+                    missInputCounter += 1
                 lane4_input_cooldown = INPUT_COOLDOWN
             
             # Super Meter (SPACE)
@@ -395,6 +428,9 @@ while running:
         button2_rect = pygame.Rect(screen.get_width() // 2 - 100, screen.get_height() // 2 + 150, button2_text.get_width() + 30, button2_text.get_height() + 10)
         pygame.draw.rect(screen, "deeppink", button2_rect)
         screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
+
+        endingStatisticsText = font.render("Extra stats:\nPerfect: " + str(perfectInputCounter) + "\nOK: "+ str(okInputCounter) + "\nBAD: " + str(badInputCounter) + "\nMiss: " + str(missInputCounter) + "\nHighest Combo: " + str(highestCombo), True, "white")
+        screen.blit(endingStatisticsText, (screen.get_width() // 2 - endingStatisticsText.get_width() // 2, screen.get_height() // 1.4))
         
     else:
         w = superMeter * (screen.get_width() // 91)
@@ -482,6 +518,8 @@ while running:
         if (note.pos.y > screen.get_height()):
             player_score -= 1
             comboMeter = 0
+
+            missInputCounter += 1
 
             textInputType = 3
             textInputExpireTimer = INPUT_TEXT_EXPIRE_DURATION
