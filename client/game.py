@@ -331,7 +331,7 @@ while running:
 
                     player_score += BASE_SCORE_INCREASE * SUPER_METER_MULT * COMBO_METER_MULT
 
-                    if (superMeter < 100):
+                    if (superMeter < 100 and superMeterActive == False):
                         superMeter += SUPER_METER_INCREASE
 
                     comboMeter += 1
@@ -397,6 +397,9 @@ while running:
         screen.blit(button2_text, (button2_rect.x + 5, button2_rect.y + 5))
         
     else:
+        w = superMeter * (screen.get_width() // 91)
+        superImage_rect = pygame.Rect(0, screen.get_height() // 1.2, w, screen.get_height() // 5)
+        pygame.draw.rect(screen, "darkgoldenrod3", superImage_rect)
 
         screen.blit(lane1InputImg, lane1InputImgPos)
         screen.blit(lane2InputImg, lane2InputImgPos)
