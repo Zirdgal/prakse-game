@@ -29,6 +29,7 @@ pip install -r requirements.txt
 ## Launch a Server
 
 - Open a terminal in the `prakse-game` folder. It will stay open as long as you want your Server to be open for.
+- If you **do not** see `(.venv)` on the **left side** for these commands, run .venv activation command **given in the earlier examples**, e.g. `.venv\Scripts\active.bat`.
 
 ### Run the following command
 ```
