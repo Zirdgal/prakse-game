@@ -67,3 +67,11 @@ python -m client.main
 ## Example Game Screenshot
 
 ![Screenshot of Mouiiyo](./img/gameExampleScreenshot.png)
+
+## If you want to make your own custom charts
+
+- Check out the `/dev` folder. In there is `chartMaker.py` and `randomizeChart.py`
+- With `chartMaker.py` you set the `SONG_ID_SELECTED` to a new id (for example 4) and add a new folder in `/game/charts/{SONG_ID_SELECTED}`. In this folder you add a `data.txt` file and a `song.txt` file. `data.txt` should follow the `/game/dataexample.txt` format of id in the first line and note spawning speed in the second line. **It is recommended to just use 20 spawning speed** for ~100 bpm songs, lower it for higher bpm, increase it for lower bpm. Also add your song to `/music being a `song{SONG_ID_SELECTED}.mp3` file.
+- With the setup ready you can now run the `chartMaker.py` and hit your `lane1` key (Default: A) to the beat of the music. When the music has finished click the constant keybind: `F` which will finish the chartmaking and save it to `/game/charts/{SONG_ID_SELECTED}`.
+- Now this generates a single chart that only has lane 1 notes. This is why `randomizeChart.py` exists It will make the notes more interesting instead of being a single lane.
+- Now that you have made your own chart to actually play it you have to add the button to `main.py`. Due to time constraints a dynamic level selector was not added.
