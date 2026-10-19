@@ -30,6 +30,11 @@ keybind2Rect = pygame.Rect(200, 900, 50, 30)
 keybind3Rect = pygame.Rect(300, 900, 50, 30)
 keybind4Rect = pygame.Rect(400, 900, 50, 30)
 keybindSuperRect = pygame.Rect(500, 900, 100, 30)
+keybind1ExplainedText = font.render("Lane1:", True, "white")
+keybind2ExplainedText = font.render("Lane2:", True, "white")
+keybind3ExplainedText = font.render("Lane3:", True, "white")
+keybind4ExplainedText = font.render("Lane4:", True, "white")
+keybindSuperExplainedText = font.render("Super:", True, "white")
 
 # keybindings.json
 root = os.getcwd()
@@ -154,6 +159,12 @@ while running:
         pygame.draw.rect(screen, keybindSuperRectCol, keybindSuperRect)
         keybindSuperText = font.render(keyBindingsData["super"], True, "white")
         screen.blit(keybindSuperText, (keybindSuperRect.x + 5, keybindSuperRect.y + 5))
+
+        screen.blit(keybind1ExplainedText, (keybind1Rect.x - 15, keybind1Rect.y - 50))
+        screen.blit(keybind2ExplainedText, (keybind2Rect.x - 15, keybind2Rect.y - 50))
+        screen.blit(keybind3ExplainedText, (keybind3Rect.x - 15, keybind3Rect.y - 50))
+        screen.blit(keybind4ExplainedText, (keybind4Rect.x - 15, keybind4Rect.y - 50))
+        screen.blit(keybindSuperExplainedText, (keybindSuperRect.x + 15, keybindSuperRect.y - 50))
 
 
 
