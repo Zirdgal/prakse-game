@@ -3,18 +3,25 @@ body {
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 table, td, th {
-    border: white 1px solid;
+    border: rgb(255, 223, 228) 1px solid;
     border-collapse: collapse;
     padding: 5px;
     text-align: center;
+    background-color: rgb(99, 0, 99);
 }
-
-a {
-    color: lightblue;
+h1, p {
+    background-color: rgb(99, 0, 99);
+    border-radius: 15px;
+    padding: 5px;
+    max-width: fit-content;
+}
+h1, a {
+    color: pink ;
 }
 a:hover {
-    color: blue;
+    color: hotpink;
 }
 h1 {
     font-size: 3vh;
@@ -50,7 +57,7 @@ nav > a:hover {
 }
 
 
-.leaderboard-container {
+.leaderboard-container{
     padding-top: 5vh;
     display: flex;
     flex-direction: row;
@@ -59,4 +66,8 @@ nav > a:hover {
     max-width: 50vw;
     min-width: 25vw;
     padding: 1vh 2vw;
+}
+
+.rules-container {
+    padding-top: 6vh;
 }
