@@ -196,6 +196,12 @@ while running:
                     sys.exit()
             # 1st note
         if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                subprocess.run([sys.executable, "client/main.py"])
+                sys.exit()
+
             if event.key == pygame.key.key_code(lane1Keybinding) and lane1_input_cooldown == 0 and len(lane1_list) > 0: 
                 lane_note = None
                 highestY = -1
